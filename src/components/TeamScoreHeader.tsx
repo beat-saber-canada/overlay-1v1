@@ -1,3 +1,5 @@
+import OverallScore from "@bocchi/bs-canada-overlay/components/OverallScore"
+
 interface Props {
   name: string
   score: number
@@ -28,6 +30,8 @@ const TeamScoreHeader = (props: Props) => {
         <span className="text-xl font-bold">{name}</span>
         <img src={pictureUrl} className="aspect-square h-20 rounded-md" />
       </div>
+
+      <OverallScore score={3} totalRounds={5} reverse={reverse} />
     </div>
   )
 }

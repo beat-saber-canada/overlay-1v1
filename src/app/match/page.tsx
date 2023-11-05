@@ -8,7 +8,7 @@ const Home = () => {
       <ScoreHeader />
       <TeamOfThree teamName="Team 1" />
       <TeamOfThree teamName="Team 2" />
-      <div className="flex w-full justify-start">
+      <div className="ml-5 flex w-full justify-start">
         <CurrentMap
           name="Routine"
           artist="Silent Siren"

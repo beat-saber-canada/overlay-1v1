@@ -16,6 +16,7 @@ const config: Config = {
       },
       colors: {
         "maple-red": "#FF2A2A",
+        "maple-red-dark": "#FF182E",
       },
     },
   },
