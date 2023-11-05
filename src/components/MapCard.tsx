@@ -1,7 +1,4 @@
-"use client"
-
-import { FastAverageColor } from "fast-average-color"
-import { useEffect, useRef, useState } from "react"
+import { getAverageColor } from "fast-average-color-node"
 
 interface Props {
   name: string
@@ -14,28 +11,17 @@ interface Props {
   state: "none" | "picked" | "banned" | "tiebreaker"
 }
 
-const MapCard = (props: Props) => {
+const MapCard = async (props: Props) => {
   const { name, artist, mapper, difficulty, pictureUrl, bsrKey, bpm, state } =
     props
-  const [bgColor, setBgColor] = useState("#000000")
-  const [textColor, setTextColor] = useState("#FFFFFF")
-  const imageRef = useRef<HTMLImageElement>(null)
-
-  useEffect(() => {
-    if (imageRef.current) {
-      const fac = new FastAverageColor()
-      fac.getColorAsync(imageRef.current).then((color) => {
-        setBgColor(color.hex)
-        setTextColor(color.isDark ? "#FFFFFF" : "#000000")
-      })
-    }
-  }, [imageRef, pictureUrl])
+  const color = await getAverageColor(pictureUrl)
+  const textColor = color.isDark ? "#FFFFFF" : "#000000"
 
   return (
     <div
       className={`flex flex-row items-center justify-between rounded-md p-5`}
       style={{
-        background: bgColor,
+        background: color.hex,
         border:
           state === "picked"
             ? "5px solid #2ADB00"
@@ -46,12 +32,8 @@ const MapCard = (props: Props) => {
             : "none",
       }}
     >
-      <div className="flex flex-row items-center space-x-5">
-        <img
-          className="aspect-square h-20 rounded-md"
-          src={pictureUrl}
-          ref={imageRef}
-        />
+      <div className="flex flex-row items-center gap-5">
+        <img className="aspect-square h-20 rounded-md" src={pictureUrl} />
         <div className="flex flex-col">
           <span className="text-2xl" style={{ color: textColor }}>
             {name} - {artist}
@@ -61,7 +43,7 @@ const MapCard = (props: Props) => {
           </span>
         </div>
       </div>
-      <div className="flex flex-col items-end space-y-1">
+      <div className="flex flex-col items-end gap-1">
         <div className="flex rounded-md bg-purple-600 p-2 shadow shadow-gray-600">
           <span className="text-xl">{difficulty}</span>
         </div>
