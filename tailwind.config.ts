@@ -17,6 +17,8 @@ const config: Config = {
       colors: {
         "maple-red": "#FF2A2A",
         "maple-red-dark": "#FF182E",
+        "picked-green": "#2ADB00",
+        "tiebraker-yellow": "#FBB03B",
       },
     },
   },
