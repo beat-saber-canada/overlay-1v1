@@ -10,6 +10,7 @@
     "relay": "relay-compiler"
   },
   "dependencies": {
+    "@react-spring/web": "^9.7.3",
     "fast-average-color-node": "^2.6.0",
     "geist": "^1.0.0",
     "next": "14.0.1",
