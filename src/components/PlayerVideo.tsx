@@ -16,7 +16,7 @@ const PlayerVideo = (props: Props) => {
       </div>
       <img
         src="https://cdn.cloudflare.steamstatic.com/steam/apps/1099585/ss_2b106ccca2fa22508951e83ed93c5ca27557c132.jpg"
-        className="aspect-video w-[400px]"
+        className="aspect-video w-[470px]"
       />
       <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
         <span className="text-xl">{combo}x</span>
