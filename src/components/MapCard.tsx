@@ -1,3 +1,5 @@
+"use server"
+
 import { getAverageColor } from "fast-average-color-node"
 import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
 import DifficultyBadge from "@bocchi/bs-canada-overlay/components/DifficultyBadge"
@@ -21,7 +23,7 @@ const MapCard = async (props: Props) => {
 
   return (
     <div
-      className="flex w-[700px] flex-row items-center justify-between rounded-md p-5"
+      className="flex w-[650px] flex-row items-center justify-between rounded-md p-5"
       style={{
         background: color.hex,
         border:
@@ -31,12 +33,12 @@ const MapCard = async (props: Props) => {
             ? "5px solid #FF182E"
             : state === "tiebreaker"
             ? "5px solid #FBB03B"
-            : "none",
+            : "5px solid transparent",
       }}
     >
       <div className="flex flex-row items-center gap-5">
         <img className="aspect-square h-24 rounded-md" src={pictureUrl} />
-        <div className="flex max-w-[450px] flex-col overflow-hidden">
+        <div className="flex max-w-[400px] flex-col overflow-hidden">
           <span
             className="line-clamp-1 overflow-ellipsis text-2xl"
             style={{ color: textColor }}
