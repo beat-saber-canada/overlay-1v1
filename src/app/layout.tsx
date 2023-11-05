@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
+import { GeistSans } from "geist/font"
 
 export const metadata: Metadata = {
   title: "Hi Tek :)",
@@ -17,8 +15,18 @@ const RootLayout = (props: Props) => {
 
   return (
     <html lang="en">
-      <body className={`${inter.className} max-w-screen max-h-screen`}>
-        {children}
+      <body className={`${GeistSans.className} max-w-screen max-h-screen`}>
+        <div className="m-5">{children}</div>
+        <div className="fixed left-0 right-0 top-0 -z-10 h-full w-full">
+          <video
+            src="/Background.mp4"
+            autoPlay
+            loop
+            muted
+            className="absolute z-10 min-h-full
+            w-auto min-w-full max-w-none"
+          />
+        </div>
       </body>
     </html>
   )

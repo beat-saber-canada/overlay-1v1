@@ -1,15 +1,15 @@
 import TeamOfThree from "@bocchi/bs-canada-overlay/components/TeamOfThree"
 import ScoreHeader from "@bocchi/bs-canada-overlay/components/ScoreHeader"
-import MapCard from "@bocchi/bs-canada-overlay/components/MapCard"
+import CurrentMap from "@bocchi/bs-canada-overlay/components/CurrentMap"
 
 const Home = () => {
   return (
-    <div className="m-5 flex flex-col items-center gap-5">
+    <div className="flex flex-col items-center gap-5">
       <ScoreHeader />
       <TeamOfThree teamName="Team 1" />
       <TeamOfThree teamName="Team 2" />
       <div className="flex w-full justify-start">
-        <MapCard
+        <CurrentMap
           name="Routine"
           artist="Silent Siren"
           mapper="Hexagonial & Splake"

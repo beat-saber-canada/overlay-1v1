@@ -9,18 +9,18 @@ const PlayerVideo = (props: Props) => {
   const { playerName, playerPictureUrl, accuracy, combo } = props
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-row items-center gap-2">
-        <img src={playerPictureUrl} className="h-16 w-16 rounded-full" />
-        <span className="text-xl font-semibold text-black">{playerName}</span>
+    <div className="flex flex-col rounded-md bg-black">
+      <div className="flex flex-row items-center gap-5 px-2 py-2 text-white">
+        <img src={playerPictureUrl} className="h-16 w-16" />
+        <span className="text-2xl font-semibold">{playerName}</span>
       </div>
       <img
         src="https://cdn.cloudflare.steamstatic.com/steam/apps/1099585/ss_2b106ccca2fa22508951e83ed93c5ca27557c132.jpg"
-        className="aspect-video w-[450px] rounded-md"
+        className="aspect-video w-[400px]"
       />
-      <div className="flex flex-row items-center justify-between">
-        <span className="text-xl text-black">{combo}x</span>
-        <span className="text-xl text-black">{accuracy}%</span>
+      <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
+        <span className="text-xl">{combo}x</span>
+        <span className="text-xl">{accuracy}%</span>
       </div>
     </div>
   )

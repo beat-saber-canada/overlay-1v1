@@ -7,8 +7,10 @@ interface Props {
 const TeamOfThree = (props: Props) => {
   const { teamName } = props
   return (
-    <div className="flex flex-col gap-5">
-      <h1 className="text-4xl">{teamName}</h1>
+    <div className="flex flex-col gap-2">
+      <div className="bg-maple-red flex max-w-fit rounded-md px-5 py-2 shadow shadow-black">
+        <h1 className="text-4xl">{teamName}</h1>
+      </div>
       <div className="flex flex-row items-center gap-10">
         <PlayerVideo
           playerName="Player1"

@@ -4,19 +4,12 @@ interface Props {
   mapper: string
   difficulty: string
   pictureUrl: string
+  key: string
+  bpm: number
 }
 
 const MapCard = (props: Props) => {
-  const { name, artist, mapper, difficulty, pictureUrl } = props
-
-  return (
-    <div className="flex flex-row items-center gap-5">
-      <img className="aspect-square h-16 rounded-md" src={pictureUrl} />
-      <span className="text-2xl">
-        {name} - {artist} ({mapper}) {difficulty}
-      </span>
-    </div>
-  )
+  //const
 }
 
 export default MapCard

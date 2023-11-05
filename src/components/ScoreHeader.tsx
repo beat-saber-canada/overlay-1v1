@@ -1,6 +1,3 @@
-"use client"
-
-import { graphql, useSubscription } from "react-relay"
 import TeamScoreHeader from "@bocchi/bs-canada-overlay/components/TeamScoreHeader"
 
 const ScoreHeader = () => {
