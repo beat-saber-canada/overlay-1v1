@@ -1,10 +1,12 @@
 import { getAverageColor } from "fast-average-color-node"
+import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
+import DifficultyBadge from "@bocchi/bs-canada-overlay/components/DifficultyBadge"
 
 interface Props {
   name: string
   artist: string
   mapper: string
-  difficulty: string
+  difficulty: Difficulty
   pictureUrl: string
   bsrKey: string
   bpm: number
@@ -44,9 +46,7 @@ const MapCard = async (props: Props) => {
         </div>
       </div>
       <div className="flex flex-col items-end gap-1">
-        <div className="flex rounded-md bg-purple-600 p-2 shadow shadow-gray-600">
-          <span className="text-xl">{difficulty}</span>
-        </div>
+        <DifficultyBadge difficulty={difficulty} />
         <span className="text-md font-semibold" style={{ color: textColor }}>
           {bsrKey}
         </span>

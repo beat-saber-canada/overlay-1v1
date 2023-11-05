@@ -10,7 +10,7 @@ const ScoreHeader = () => {
         pictureUrl="https://m.media-amazon.com/images/I/71Jo631kIDL._AC_UF1000,1000_QL80_.jpg"
         reverse
       />
-      <img src="/Red_Icon.png" className="aspect-square h-8" />
+      <img src="/Red_Icon.png" className="aspect-square h-12" />
       <TeamScoreHeader
         name="Team 2"
         score={10000}

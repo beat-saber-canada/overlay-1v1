@@ -1,6 +1,7 @@
 import TeamOfThree from "@bocchi/bs-canada-overlay/components/TeamOfThree"
 import ScoreHeader from "@bocchi/bs-canada-overlay/components/ScoreHeader"
 import CurrentMap from "@bocchi/bs-canada-overlay/components/CurrentMap"
+import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
 
 const Home = () => {
   return (
@@ -16,8 +17,9 @@ const Home = () => {
             name="Routine"
             artist="Silent Siren"
             mapper="Hexagonial & Splake"
-            difficulty="Expert+"
+            difficulty={Difficulty.ExpertPlus}
             pictureUrl="https://cdn.scoresaber.com/covers/AEDD974BD0B7BFAF8C9F9950BFD6368C04ADE258.png"
+            bsrKey="2683"
           />
         </div>
       </div>
