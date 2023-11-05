@@ -1,0 +1,114 @@
+type Mutation {
+  updatePage(page: InputPage!): GQLOverState!
+}
+
+type Map {
+  id: String!
+  name: String!
+  difficulty: Int!
+  modifiers: [String!]!
+}
+
+type Page {
+  data: [PageData!]!
+  path: String!
+}
+
+type PageData {
+  key: String!
+  value: String!
+}
+
+type GQLOverState {
+  page: Page!
+}
+
+type Query {
+  state: GQLTAState!
+  page: GQLOverState!
+}
+
+type Score {
+  ownerId: Uuid!
+  score: Int!
+  scoreWithModifiers: Int!
+  maxScore: Int!
+  maxScoreWithModifiers: Int!
+  combo: Int!
+  playerHealth: Float!
+  accuracy: Float!
+  songPosition: Float!
+  notesMissed: Int!
+  badCuts: Int!
+  bombHits: Int!
+  wallHits: Int!
+  maxCombo: Int!
+  leftHandHits: Int!
+  leftHandMisses: Int!
+  leftHandBadCut: Int!
+  rightHandHits: Int!
+  rightHandMisses: Int!
+  rightHandBadCut: Int!
+}
+
+enum DownloadState {
+  NONE
+  DOWNLOADING
+  DOWNLOADED
+  DOWNLOAD_ERROR
+}
+
+type GQLTAState {
+  coordinators: [User!]!
+  players: [User!]!
+  matches: [Match!]!
+}
+
+input InputPageData {
+  key: String!
+  value: String!
+}
+
+type Team {
+  id: Uuid!
+  name: String!
+}
+
+type Match {
+  id: Uuid!
+  players: [User!]!
+  teams: [Team!]!
+  coordinators: [User!]!
+  currentMap: Map
+  scores: [Score!]!
+}
+
+enum PlayState {
+  WAITING
+  IN_GAME
+}
+
+type Subscription {
+  state: GQLTAState!
+  page: GQLOverState!
+}
+
+# Uuid
+scalar Uuid
+
+type User {
+  id: Uuid!
+  name: String!
+  userId: String!
+  playState: PlayState!
+  downloadState: DownloadState!
+  team: Team
+  modList: [String!]!
+  streamDelayMs: Int!
+  streamSyncStartMs: Int!
+}
+
+input InputPage {
+  data: [InputPageData!]!
+  path: String!
+}

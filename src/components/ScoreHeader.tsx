@@ -1,3 +1,6 @@
+"use client"
+
+import { graphql, useSubscription } from "react-relay"
 import TeamScoreHeader from "@bocchi/bs-canada-overlay/components/TeamScoreHeader"
 
 const ScoreHeader = () => {
@@ -7,15 +10,15 @@ const ScoreHeader = () => {
         name="Team 1"
         score={10000}
         accuracy={99}
-        pictureUrl="https://cdn.cloudflare.steamstatic.com/steam/apps/1099585/ss_2b106ccca2fa22508951e83ed93c5ca27557c132.jpg"
+        pictureUrl="https://m.media-amazon.com/images/I/71Jo631kIDL._AC_UF1000,1000_QL80_.jpg"
         reverse
       />
-      <img src="/Red_Icon.png" className="aspect-square h-5" />
+      <img src="/Red_Icon.png" className="aspect-square h-8" />
       <TeamScoreHeader
         name="Team 2"
         score={10000}
         accuracy={99}
-        pictureUrl="https://cdn.cloudflare.steamstatic.com/steam/apps/1099585/ss_2b106ccca2fa22508951e83ed93c5ca27557c132.jpg"
+        pictureUrl="https://m.media-amazon.com/images/I/71Jo631kIDL._AC_UF1000,1000_QL80_.jpg"
       />
     </div>
   )

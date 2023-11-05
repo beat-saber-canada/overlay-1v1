@@ -4,11 +4,11 @@ import MapCard from "@bocchi/bs-canada-overlay/components/MapCard"
 
 const Home = () => {
   return (
-    <div className="flex h-full w-full flex-col items-center gap-10">
+    <div className="m-5 flex flex-col items-center gap-5">
       <ScoreHeader />
       <TeamOfThree teamName="Team 1" />
       <TeamOfThree teamName="Team 2" />
-      <div className="flex justify-between">
+      <div className="flex w-full justify-start">
         <MapCard
           name="Routine"
           artist="Silent Siren"

@@ -1,23 +1,25 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'Hi Tek :)',
+  title: "Hi Tek :)",
 }
 
 interface Props {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 const RootLayout = (props: Props) => {
-    const { children } = props
+  const { children } = props
 
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} max-w-screen max-h-screen`}>
+        {children}
+      </body>
     </html>
   )
 }

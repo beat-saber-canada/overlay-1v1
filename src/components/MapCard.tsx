@@ -11,7 +11,7 @@ const MapCard = (props: Props) => {
 
   return (
     <div className="flex flex-row items-center gap-5">
-      <img className="aspect-square h-12 rounded-md" src={pictureUrl} />
+      <img className="aspect-square h-16 rounded-md" src={pictureUrl} />
       <span className="text-2xl">
         {name} - {artist} ({mapper}) {difficulty}
       </span>
