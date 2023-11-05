@@ -21,7 +21,7 @@ const MapCard = async (props: Props) => {
 
   return (
     <div
-      className={`flex flex-row items-center justify-between rounded-md p-5`}
+      className="flex w-[700px] flex-row items-center justify-between rounded-md p-5"
       style={{
         background: color.hex,
         border:
@@ -35,12 +35,18 @@ const MapCard = async (props: Props) => {
       }}
     >
       <div className="flex flex-row items-center gap-5">
-        <img className="aspect-square h-20 rounded-md" src={pictureUrl} />
-        <div className="flex flex-col">
-          <span className="text-2xl" style={{ color: textColor }}>
+        <img className="aspect-square h-24 rounded-md" src={pictureUrl} />
+        <div className="flex max-w-[450px] flex-col overflow-hidden">
+          <span
+            className="line-clamp-1 overflow-ellipsis text-2xl"
+            style={{ color: textColor }}
+          >
             {name} - {artist}
           </span>
-          <span className="text-sm" style={{ color: textColor }}>
+          <span
+            className="line-clamp-1 overflow-ellipsis text-sm"
+            style={{ color: textColor }}
+          >
             Mapped by {mapper}
           </span>
         </div>

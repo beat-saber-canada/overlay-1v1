@@ -62,19 +62,19 @@ const TeamScoreHeader = (props: Props) => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    scoreRef.current?.scrollWidth
-  }, [hideScore, scoreSpring.width, width])
-
   return (
     <div
-      className={`flex flex-row ${
-        reverse && "flex-row-reverse"
-      } items-center gap-5`}
+      className={`flex flex-row items-center gap-5 ${
+        reverse ? "flex-row-reverse" : ""
+      }`}
     >
       <animated.div
         className="flex flex-col overflow-hidden"
-        style={mounted ? { ...scoreSpring } : {}}
+        style={
+          mounted
+            ? { ...scoreSpring }
+            : { width: hideScore ? "0px" : `${width}px` }
+        }
         ref={scoreRef}
       >
         <span className="text-xl font-semibold">{accuracy.toFixed(2)}%</span>
