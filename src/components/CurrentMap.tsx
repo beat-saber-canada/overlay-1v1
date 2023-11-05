@@ -14,7 +14,7 @@ interface Props {
   bsrKey: string
 }
 
-export const useObserveElementWidth = <T extends HTMLElement>() => {
+const useObserveElementWidth = <T extends HTMLElement>() => {
   const [width, setWidth] = useState(0)
   const ref = useRef<T>(null)
 
