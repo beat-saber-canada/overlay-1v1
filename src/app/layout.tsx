@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { GeistSans } from "geist/font"
+import TRPCProvider from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 export const metadata: Metadata = {
   title: "Hi Tek :)",
@@ -16,7 +17,9 @@ const RootLayout = (props: Props) => {
   return (
     <html lang="en">
       <body className={`${GeistSans.className} max-w-screen max-h-screen`}>
-        <div className="p-5">{children}</div>
+        <div className="p-5">
+          <TRPCProvider>{children}</TRPCProvider>
+        </div>
         <div className="fixed left-0 right-0 top-0 -z-10 h-full w-full">
           <video
             src="/Background.mp4"

@@ -3,7 +3,7 @@ type Mutation {
 }
 
 type Map {
-  id: String!
+  hash: String!
   name: String!
   difficulty: Int!
   modifiers: [String!]!
@@ -12,6 +12,7 @@ type Map {
 type Page {
   data: [PageData!]!
   path: String!
+  pathName: String!
 }
 
 type PageData {
@@ -25,11 +26,12 @@ type GQLOverState {
 
 type Query {
   state: GQLTAState!
+  matchById(id: Uuid!): Match
   page: GQLOverState!
 }
 
 type Score {
-  ownerId: Uuid!
+  ownerGuid: Uuid!
   score: Int!
   scoreWithModifiers: Int!
   maxScore: Int!
@@ -70,12 +72,12 @@ input InputPageData {
 }
 
 type Team {
-  id: Uuid!
+  guid: Uuid!
   name: String!
 }
 
 type Match {
-  id: Uuid!
+  guid: Uuid!
   players: [User!]!
   teams: [Team!]!
   coordinators: [User!]!
@@ -97,7 +99,7 @@ type Subscription {
 scalar Uuid
 
 type User {
-  id: Uuid!
+  guid: Uuid!
   name: String!
   userId: String!
   playState: PlayState!
@@ -111,4 +113,5 @@ type User {
 input InputPage {
   data: [InputPageData!]!
   path: String!
+  pathName: String!
 }
