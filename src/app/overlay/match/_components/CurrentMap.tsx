@@ -2,7 +2,7 @@
 
 import { useSpring, animated } from "@react-spring/web"
 import { useEffect, useRef, useState } from "react"
-import DifficultyBadge from "@bocchi/bs-canada-overlay/components/DifficultyBadge"
+import DifficultyBadge from "@bocchi/bs-canada-overlay/app/overlay/_components/DifficultyBadge"
 import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
 
 interface Props {

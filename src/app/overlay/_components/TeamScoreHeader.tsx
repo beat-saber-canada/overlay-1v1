@@ -1,6 +1,6 @@
 "use client"
 
-import OverallScore from "@bocchi/bs-canada-overlay/components/OverallScore"
+import OverallScore from "@bocchi/bs-canada-overlay/app/overlay/_components/OverallScore"
 import { useSpring, animated } from "@react-spring/web"
 import {
   DependencyList,

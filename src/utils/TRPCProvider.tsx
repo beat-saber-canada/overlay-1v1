@@ -4,11 +4,12 @@ import { createTRPCReact, httpBatchLink } from "@trpc/react-query"
 import { AppRouter } from "@bocchi/bs-canada-overlay/server/router"
 import { useState } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import type { ReactNode } from "react"
 
 export const trpc = createTRPCReact<AppRouter>({})
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 const TRPCProvider = (props: Props) => {

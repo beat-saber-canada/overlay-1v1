@@ -1,4 +1,4 @@
-import TeamScoreHeader from "@bocchi/bs-canada-overlay/components/TeamScoreHeader"
+import TeamScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/TeamScoreHeader"
 
 interface Props {
   hideScore?: boolean

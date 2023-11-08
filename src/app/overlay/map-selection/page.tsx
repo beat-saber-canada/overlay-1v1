@@ -1,8 +1,8 @@
 "use server"
 
-import MapCard from "@bocchi/bs-canada-overlay/components/MapCard"
+import MapCard from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_components/MapCard"
 import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
-import MapSelectionScoreAnimation from "@bocchi/bs-canada-overlay/app/map-selection/MapSelectionScoreAnimation"
+import MapSelectionScoreAnimation from "@bocchi/bs-canada-overlay/app/overlay/map-selection/MapSelectionScoreAnimation"
 
 const MapSelectionPage = () => {
   return (

@@ -1,49 +1,41 @@
 "use client"
 
-import { useSpring, animated } from "@react-spring/web"
+import ScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/ScoreHeader"
+import { animated, useSpring } from "@react-spring/web"
 import { useEffect, useState } from "react"
-import ScoreHeader from "@bocchi/bs-canada-overlay/components/ScoreHeader"
 import { useRouter } from "next/navigation"
 
 interface Props {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
-const MatchScoreAnimation = (props: Props) => {
+const MapSelectionScoreAnimation = (props: Props) => {
   const { children } = props
-  const router = useRouter()
-  const [isMatchVisible, setisMatchVisible] = useState(false)
-  const [hideScore, setHideScore] = useState(true)
+  const [isMapsVisible, setIsMapsVisible] = useState(false)
   const scoreSpring = useSpring({
-    scale: isMatchVisible ? "100%" : "150%",
-    top: isMatchVisible ? "4%" : "50%",
+    scale: isMapsVisible ? "100%" : "150%",
+    top: isMapsVisible ? "4%" : "50%",
     config: {
       tension: 100,
       friction: 20,
     },
   })
-
   const contentSpring = useSpring({
-    opacity: isMatchVisible ? 1 : 0,
+    opacity: isMapsVisible ? 1 : 0,
     config: {
       tension: 100,
       friction: 50,
     },
     onResolve: () => {
-      if (isMatchVisible) return
-      setHideScore(true)
-      setTimeout(() => {
-        router.push("/map-selection")
-      }, 1000)
+      if (isMapsVisible) return
+      router.push("/match")
     },
   })
+  const router = useRouter()
 
   useEffect(() => {
     setTimeout(() => {
-      setisMatchVisible(true)
-      setTimeout(() => {
-        setHideScore(false)
-      }, 1000)
+      setIsMapsVisible(true)
     }, 1000)
   }, [])
 
@@ -51,7 +43,7 @@ const MatchScoreAnimation = (props: Props) => {
     // Just doing this for local testing
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === "m") {
-        setisMatchVisible(false)
+        setIsMapsVisible(false)
       }
     }
 
@@ -65,10 +57,11 @@ const MatchScoreAnimation = (props: Props) => {
   return (
     <>
       <animated.div
-        className="grid max-h-fit w-full grid-cols-5"
+        className="flex flex-col items-center gap-10"
         style={{ ...contentSpring }}
       >
-        {children}
+        <div className="flex h-20" />
+        <div className="flex flex-wrap items-center gap-5">{children}</div>
       </animated.div>
       <animated.div
         style={{
@@ -79,10 +72,10 @@ const MatchScoreAnimation = (props: Props) => {
           width: "100%",
         }}
       >
-        <ScoreHeader hideScore={hideScore} />
+        <ScoreHeader hideScore />
       </animated.div>
     </>
   )
 }
 
-export default MatchScoreAnimation
+export default MapSelectionScoreAnimation

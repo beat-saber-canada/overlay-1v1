@@ -2,7 +2,7 @@
 
 import { getAverageColor } from "fast-average-color-node"
 import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
-import DifficultyBadge from "@bocchi/bs-canada-overlay/components/DifficultyBadge"
+import DifficultyBadge from "@bocchi/bs-canada-overlay/app/overlay/_components/DifficultyBadge"
 
 interface Props {
   name: string
