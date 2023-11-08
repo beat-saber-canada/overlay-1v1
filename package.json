@@ -10,6 +10,7 @@
     "relay": "relay-compiler"
   },
   "dependencies": {
+    "@kvs/node-localstorage": "^2.1.5",
     "@react-spring/web": "^9.7.3",
     "@tanstack/react-query": "^4.35.3",
     "@trpc/client": "^10.43.1",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^18",
     "@types/react-relay": "^16.0.0",
     "autoprefixer": "^10.0.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "postcss": "^8",

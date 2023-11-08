@@ -18,7 +18,7 @@ const TRPCProvider = (props: Props) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/trpc`,
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/trpc`,
         }),
       ],
     }),
