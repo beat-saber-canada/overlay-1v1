@@ -2,29 +2,16 @@
 
 import { RelayEnvironmentProvider, Variables } from "react-relay"
 import { Environment, Network, RecordSource, Store } from "relay-runtime"
-import { RequestParameters } from "relay-runtime/lib/util/RelayConcreteNode"
+import { RelayNetworkLayer, urlMiddleware } from "react-relay-network-modern"
 
-const fetchGraphQL = async (
-  requestParameters: RequestParameters,
-  variables: Variables,
-) => {
-  const response = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL!, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: requestParameters.text,
-      variables,
-    }),
-  })
-
-  // Get the response as JSON
-  return await response.json()
-}
+const network = new RelayNetworkLayer([
+  urlMiddleware({
+    url: process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+  }),
+])
 
 const environment = new Environment({
-  network: Network.create(fetchGraphQL),
+  network,
   store: new Store(new RecordSource()),
 })
 

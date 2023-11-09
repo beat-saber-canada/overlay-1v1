@@ -11,9 +11,12 @@ import {
   useState,
 } from "react"
 import TeamAvatars from "@bocchi/bs-canada-overlay/data/teams"
+import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
+import { graphql, useLazyLoadQuery, useSubscription } from "react-relay"
+import { TeamScoreHeaderQuery } from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
 
 interface Props {
-  name: string
+  teamIndex: number
   score: number
   accuracy: number
   reverse?: boolean
@@ -39,7 +42,7 @@ const useObserveMaxWidth = <T extends HTMLElement>(deps?: DependencyList) => {
 
 const TeamScoreHeader = (props: Props) => {
   const {
-    name,
+    teamIndex,
     score,
     accuracy,
     reverse,
@@ -47,7 +50,27 @@ const TeamScoreHeader = (props: Props) => {
     hideScore,
     totalRounds,
   } = props
+  const { data: currentMatchId } = trpc.currentMatchId.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
+  const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
+    graphql`
+      query TeamScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
+        matchById(id: $currentMatchId) @skip(if: $skip) {
+          teams {
+            name
+          }
+        }
+      }
+    `,
+    { currentMatchId: currentMatchId, skip: !currentMatchId },
+  )
+  const name = useMemo(
+    () => teamScoreHeaderQuery?.matchById?.teams?.[teamIndex]?.name ?? "",
+    [teamIndex, teamScoreHeaderQuery],
+  )
   const pictureUrl = useMemo(() => TeamAvatars.get(name), [name])
+
   const { width, ref: scoreRef } = useObserveMaxWidth<HTMLDivElement>([
     score,
     accuracy,

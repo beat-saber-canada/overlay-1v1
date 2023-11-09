@@ -15,13 +15,13 @@ const MatchPage = () => {
       <div className="col-span-4 flex w-full flex-col gap-5">
         <div className="flex h-20" />
         <TeamOfThree
-          teamName="Team 1"
+          teamIndex={0}
           streamUrl1={getStreamUrl("crystal-sirens")}
           streamUrl2={getStreamUrl("enralis")}
           streamUrl3={getStreamUrl("mojo-vr")}
         />
         <TeamOfThree
-          teamName="Team 2"
+          teamIndex={1}
           streamUrl1={getStreamUrl("wdg-pink")}
           streamUrl2={getStreamUrl("raccoon-vr")}
           streamUrl3={getStreamUrl("skkeye")}

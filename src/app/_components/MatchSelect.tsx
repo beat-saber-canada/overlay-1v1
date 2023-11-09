@@ -15,7 +15,7 @@ const MatchSelect = () => {
   const utils = trpc.useUtils()
   const { data: selectedMatchId, isFetched: isFetchedMatchId } =
     trpc.currentMatchId.useQuery()
-  const { mutate: updateMatchId } = trpc.switchMatchId.useMutation({
+  const { mutate: updateMatchId } = trpc.updateMatchId.useMutation({
     onSuccess: (returnVal) => {
       utils.currentMatchId.setData(undefined, returnVal)
     },

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ffd8a083ed9c2b433a749def6eaa6344>>
+ * @generated SignedSource<<05802290fb4b958f944b0ca336fd10b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,20 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ScoreHeaderQuery$variables = {
+export type TeamScoreHeaderQuery$variables = {
   currentMatchId: any;
   skip: boolean;
 };
-export type ScoreHeaderQuery$data = {
+export type TeamScoreHeaderQuery$data = {
   readonly matchById?: {
     readonly teams: ReadonlyArray<{
       readonly name: string;
     }>;
   } | null | undefined;
 };
-export type ScoreHeaderQuery = {
-  response: ScoreHeaderQuery$data;
-  variables: ScoreHeaderQuery$variables;
+export type TeamScoreHeaderQuery = {
+  response: TeamScoreHeaderQuery$data;
+  variables: TeamScoreHeaderQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ScoreHeaderQuery",
+    "name": "TeamScoreHeaderQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -96,20 +96,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ScoreHeaderQuery",
+    "name": "TeamScoreHeaderQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e0c38919f4478d96af7227eb3a5e7261",
+    "cacheID": "fa572d6f30eaf912820c74d85fee6fb3",
     "id": null,
     "metadata": {},
-    "name": "ScoreHeaderQuery",
+    "name": "TeamScoreHeaderQuery",
     "operationKind": "query",
-    "text": "query ScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n    }\n  }\n}\n"
+    "text": "query TeamScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bbce16d878eb3ffbf3b6ffb9ca6fc8be";
+(node as any).hash = "1b73ebc91aec435e5aa7220f40e3628c";
 
 export default node;

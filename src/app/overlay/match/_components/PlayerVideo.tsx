@@ -38,8 +38,8 @@ const PlayerVideo = (props: Props) => {
           url={streamUrl}
           muted={muted}
           playing={isPlaying}
-          width="unset"
-          height="unset"
+          width="100%"
+          height="100%"
         />
       </div>
       <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
