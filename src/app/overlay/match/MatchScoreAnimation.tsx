@@ -33,7 +33,7 @@ const MatchScoreAnimation = (props: Props) => {
       if (isMatchVisible) return
       setHideScore(true)
       setTimeout(() => {
-        router.push("/map-selection")
+        //router.push("/map-selection")
       }, 1000)
     },
   })

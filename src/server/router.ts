@@ -11,6 +11,13 @@ export const appRouter = router({
   currentScene: procedure.query((opts) => {
     return opts.ctx.state.get("scene")
   }),
+  switchMatchId: procedure.input(z.string().uuid()).mutation((opts) => {
+    opts.ctx.state.set("matchId", opts.input)
+    return opts.input
+  }),
+  currentMatchId: procedure.query((opts) => {
+    return opts.ctx.state.get("matchId")
+  }),
 })
 
 // export type definition of API

@@ -28,7 +28,7 @@ const MapSelectionScoreAnimation = (props: Props) => {
     },
     onResolve: () => {
       if (isMapsVisible) return
-      router.push("/match")
+      //router.push("/match")
     },
   })
   const router = useRouter()

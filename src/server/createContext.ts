@@ -4,6 +4,7 @@ import { inferAsyncReturnType } from "@trpc/server"
 
 interface State extends KvsLocalStorageSchema {
   scene: string
+  matchId: string
 }
 
 const createContext = async () => ({

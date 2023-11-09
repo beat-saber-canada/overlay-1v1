@@ -5,7 +5,12 @@ import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 const SceneStateListener = () => {
-  const { data: currentScene, isFetched } = trpc.currentScene.useQuery()
+  const { data: currentScene, isFetched } = trpc.currentScene.useQuery(
+    undefined,
+    {
+      refetchInterval: 1000,
+    },
+  )
   const pathname = usePathname()
   const router = useRouter()
 
