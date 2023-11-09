@@ -6,15 +6,16 @@ import {
   DependencyList,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
+import TeamAvatars from "@bocchi/bs-canada-overlay/data/teams"
 
 interface Props {
   name: string
   score: number
   accuracy: number
-  pictureUrl: string
   reverse?: boolean
   overallScore: number
   totalRounds: number
@@ -41,12 +42,12 @@ const TeamScoreHeader = (props: Props) => {
     name,
     score,
     accuracy,
-    pictureUrl,
     reverse,
     overallScore,
     hideScore,
     totalRounds,
   } = props
+  const pictureUrl = useMemo(() => TeamAvatars.get(name), [name])
   const { width, ref: scoreRef } = useObserveMaxWidth<HTMLDivElement>([
     score,
     accuracy,

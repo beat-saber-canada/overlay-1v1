@@ -90,11 +90,6 @@ enum PlayState {
   IN_GAME
 }
 
-type Subscription {
-  state: GQLTAState!
-  page: GQLOverState!
-}
-
 # Uuid
 scalar Uuid
 

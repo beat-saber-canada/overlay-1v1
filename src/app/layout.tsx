@@ -3,6 +3,7 @@ import "./globals.css"
 import { GeistSans } from "geist/font"
 import TRPCProvider from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import type { ReactNode } from "react"
+import RelayProvider from "@bocchi/bs-canada-overlay/utils/RelayProvider"
 
 export const metadata: Metadata = {
   title: "Hi Tek :)",
@@ -18,7 +19,9 @@ const RootLayout = (props: Props) => {
   return (
     <html lang="en">
       <body className={`${GeistSans.className} max-w-screen max-h-screen`}>
-        <TRPCProvider>{children}</TRPCProvider>
+        <RelayProvider>
+          <TRPCProvider>{children}</TRPCProvider>
+        </RelayProvider>
       </body>
     </html>
   )

@@ -5,19 +5,16 @@ import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 const SceneStateListener = () => {
-  const { data: currentScene, isFetched } = trpc.currentScene.useQuery(
-    undefined,
-    {
-      refetchInterval: 1000,
-    },
-  )
+  const { data: currentScene } = trpc.currentScene.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
   const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
-    if (isFetched && pathname !== `/overlay/${currentScene}`)
+    if (!!currentScene && pathname !== `/overlay/${currentScene}`)
       router.replace(`/overlay/${currentScene}`)
-  }, [currentScene, isFetched, pathname, router])
+  }, [currentScene, pathname, router])
 
   return null
 }
