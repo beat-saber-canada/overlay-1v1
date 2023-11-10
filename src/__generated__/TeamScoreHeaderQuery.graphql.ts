@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05802290fb4b958f944b0ca336fd10b1>>
+ * @generated SignedSource<<29f6e3c2be811e7bd356ccc27b5ab584>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,19 @@ export type TeamScoreHeaderQuery$variables = {
 };
 export type TeamScoreHeaderQuery$data = {
   readonly matchById?: {
+    readonly players: ReadonlyArray<{
+      readonly guid: any;
+      readonly team: {
+        readonly guid: any;
+      } | null | undefined;
+    }>;
+    readonly scores: ReadonlyArray<{
+      readonly maxScore: number;
+      readonly ownerGuid: any;
+      readonly score: number;
+    }>;
     readonly teams: ReadonlyArray<{
+      readonly guid: any;
       readonly name: string;
     }>;
   } | null | undefined;
@@ -38,7 +50,14 @@ var v0 = [
     "name": "skip"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "guid",
+  "storageKey": null
+},
+v2 = [
   {
     "condition": "skip",
     "kind": "Condition",
@@ -72,6 +91,63 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Score",
+            "kind": "LinkedField",
+            "name": "scores",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "ownerGuid",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "score",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "maxScore",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "players",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -88,7 +164,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "TeamScoreHeaderQuery",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -97,19 +173,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "TeamScoreHeaderQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "fa572d6f30eaf912820c74d85fee6fb3",
+    "cacheID": "7da6b0c3ab8fa374b89eef4625463762",
     "id": null,
     "metadata": {},
     "name": "TeamScoreHeaderQuery",
     "operationKind": "query",
-    "text": "query TeamScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n    }\n  }\n}\n"
+    "text": "query TeamScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n      guid\n    }\n    scores {\n      ownerGuid\n      score\n      maxScore\n    }\n    players {\n      guid\n      team {\n        guid\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1b73ebc91aec435e5aa7220f40e3628c";
+(node as any).hash = "f375784d8c64e583c91bcd32898fbc29";
 
 export default node;

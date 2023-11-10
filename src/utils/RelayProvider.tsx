@@ -2,11 +2,20 @@
 
 import { RelayEnvironmentProvider, Variables } from "react-relay"
 import { Environment, Network, RecordSource, Store } from "relay-runtime"
-import { RelayNetworkLayer, urlMiddleware } from "react-relay-network-modern"
+import {
+  batchMiddleware,
+  RelayNetworkLayer,
+  urlMiddleware,
+} from "react-relay-network-modern"
 
 const network = new RelayNetworkLayer([
   urlMiddleware({
     url: process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+  }),
+  batchMiddleware({
+    batchUrl: process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+    batchTimeout: 10,
+    maxBatchSize: 10,
   }),
 ])
 

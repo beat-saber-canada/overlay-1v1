@@ -12,13 +12,14 @@ import {
 } from "react"
 import TeamAvatars from "@bocchi/bs-canada-overlay/data/teams"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import { TeamScoreHeaderQuery } from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
+import {
+  TeamScoreHeaderQuery,
+  TeamScoreHeaderQuery$data,
+} from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
 import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
 
 interface Props {
   teamIndex: number
-  score: number
-  accuracy: number
   reverse?: boolean
   overallScore: number
   totalRounds: number
@@ -40,16 +41,35 @@ const useObserveMaxWidth = <T extends HTMLElement>(deps?: DependencyList) => {
   }
 }
 
-const TeamScoreHeader = (props: Props) => {
-  const {
-    teamIndex,
+const useCalculateScore = (
+  teamScoreHeaderQuery: TeamScoreHeaderQuery$data,
+  teamGuid?: string,
+) => {
+  if (!teamScoreHeaderQuery || !teamGuid) {
+    return {
+      score: 0,
+      accuracy: 0,
+    }
+  }
+
+  const playerGuidsFromTeam = teamScoreHeaderQuery?.matchById?.players
+    .filter((player) => player.team?.guid === teamGuid)
+    .map((player) => player.guid) as string[]
+  const scores = teamScoreHeaderQuery?.matchById?.scores.filter((score) =>
+    playerGuidsFromTeam.includes(score.ownerGuid),
+  )
+  const score =
+    scores?.reduce((currentScore, score) => currentScore + score.score, 0) ?? 0
+  const accuracy = score / (scores?.[0]?.maxScore ?? 1)
+
+  return {
     score,
     accuracy,
-    reverse,
-    overallScore,
-    hideScore,
-    totalRounds,
-  } = props
+  }
+}
+
+const TeamScoreHeader = (props: Props) => {
+  const { teamIndex, reverse, overallScore, hideScore, totalRounds } = props
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
     graphql`
@@ -57,17 +77,33 @@ const TeamScoreHeader = (props: Props) => {
         matchById(id: $currentMatchId) @skip(if: $skip) {
           teams {
             name
+            guid
+          }
+          scores {
+            ownerGuid
+            score
+            maxScore
+          }
+          players {
+            guid
+            team {
+              guid
+            }
           }
         }
       }
     `,
     { currentMatchId: currentMatchId, skip: !currentMatchId },
   )
-  const name = useMemo(
-    () => teamScoreHeaderQuery?.matchById?.teams?.[teamIndex]?.name ?? "",
-    [teamIndex, teamScoreHeaderQuery],
+  const team = teamScoreHeaderQuery?.matchById?.teams?.[teamIndex]
+  const pictureUrl = useMemo(
+    () => TeamAvatars.get(team?.name ?? ""),
+    [team?.name],
   )
-  const pictureUrl = useMemo(() => TeamAvatars.get(name), [name])
+  const { score, accuracy } = useCalculateScore(
+    teamScoreHeaderQuery,
+    team?.guid,
+  )
 
   const { width, ref: scoreRef } = useObserveMaxWidth<HTMLDivElement>([
     score,
@@ -108,7 +144,7 @@ const TeamScoreHeader = (props: Props) => {
           reverse && "flex-row-reverse"
         } `}
       >
-        <span className="text-xl font-bold">{name}</span>
+        <span className="text-xl font-bold">{team?.name}</span>
         <img src={pictureUrl} className="aspect-square h-20 rounded-md" />
       </div>
 
