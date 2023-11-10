@@ -43,7 +43,7 @@ const MatchSelect = () => {
   if (!isFetchedMatchId || !matches) return null
 
   return (
-    <Select value={selectedMatchId} onValueChange={onChange}>
+    <Select value={selectedMatchId ?? undefined} onValueChange={onChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a Team" />
       </SelectTrigger>

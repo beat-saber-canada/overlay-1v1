@@ -1,9 +1,9 @@
 enum Difficulty {
-  Easy = 1,
-  Normal = 2,
-  Hard = 3,
-  Expert = 4,
-  ExpertPlus = 5,
+  Easy = 0,
+  Normal = 1,
+  Hard = 2,
+  Expert = 3,
+  ExpertPlus = 4,
 }
 
 export default Difficulty

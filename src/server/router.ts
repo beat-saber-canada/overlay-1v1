@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { procedure, router } from "@bocchi/bs-canada-overlay/server/trpc"
+import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -57,6 +58,11 @@ export const appRouter = router({
     )
     const data = (await res.json()) as { profilePicture?: string }
     return data.profilePicture ?? null
+  }),
+  beatSaverMapDetails: procedure.input(z.string()).query(async (opts) => {
+    const res = await fetch(`https://api.beatsaver.com/maps/hash/${opts.input}`)
+    const data = (await res.json()) as BeatSaverMap
+    return data
   }),
 })
 
