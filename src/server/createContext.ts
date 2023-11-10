@@ -3,17 +3,17 @@ import type { KvsLocalStorageSchema } from "@kvs/node-localstorage"
 import { inferAsyncReturnType } from "@trpc/server"
 
 interface State extends KvsLocalStorageSchema {
-  scene: string
-  matchId: string
-  scoreRequiredToWin: number
+  scene: string | null
+  matchId: string | null
+  scoreRequiredToWin: number | null
   team0: {
     overallScore: number
     nameOverride?: string
-  }
+  } | null
   team1: {
     overallScore: number
     nameOverride?: string
-  }
+  } | null
 }
 
 const createContext = async () => ({

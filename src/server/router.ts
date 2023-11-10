@@ -8,8 +8,8 @@ export const appRouter = router({
       opts.ctx.state.set("scene", opts.input)
       return opts.input
     }),
-  currentScene: procedure.query((opts) => {
-    return opts.ctx.state.get("scene")
+  currentScene: procedure.query(async (opts) => {
+    return (await opts.ctx.state.get("scene")) ?? "map-selection"
   }),
   updateMatchId: procedure.input(z.string().uuid()).mutation((opts) => {
     opts.ctx.state.set("matchId", opts.input)
@@ -51,6 +51,13 @@ export const appRouter = router({
       opts.ctx.state.set(`team${opts.input.index}`, team)
       return opts.input
     }),
+  scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
+    const res = await fetch(
+      `https://scoresaber.com/api/player/${opts.input}/basic`,
+    )
+    const data = (await res.json()) as { profilePicture?: string }
+    return data.profilePicture ?? null
+  }),
 })
 
 // export type definition of API

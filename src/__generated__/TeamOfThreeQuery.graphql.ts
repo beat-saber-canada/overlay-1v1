@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92c7a5f5fd30a0cb519c1ce6e0e15c45>>
+ * @generated SignedSource<<f9b554fdf2ca750f1ea9ed36e6ab0a0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,14 @@ export type TeamOfThreeQuery$variables = {
 };
 export type TeamOfThreeQuery$data = {
   readonly matchById?: {
+    readonly players: ReadonlyArray<{
+      readonly guid: any;
+      readonly team: {
+        readonly guid: any;
+      } | null | undefined;
+    }>;
     readonly teams: ReadonlyArray<{
+      readonly guid: any;
       readonly name: string;
     }>;
   } | null | undefined;
@@ -38,7 +45,14 @@ var v0 = [
     "name": "skip"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "guid",
+  "storageKey": null
+},
+v2 = [
   {
     "condition": "skip",
     "kind": "Condition",
@@ -72,7 +86,32 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
-              }
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "players",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
             ],
             "storageKey": null
           }
@@ -88,7 +127,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "TeamOfThreeQuery",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -97,19 +136,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "TeamOfThreeQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "4bede60788a3ba40d938461f0ceed037",
+    "cacheID": "23ee001c24a33e23662af12007a3086d",
     "id": null,
     "metadata": {},
     "name": "TeamOfThreeQuery",
     "operationKind": "query",
-    "text": "query TeamOfThreeQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n    }\n  }\n}\n"
+    "text": "query TeamOfThreeQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n      guid\n    }\n    players {\n      team {\n        guid\n      }\n      guid\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e604867dc7bbe3b9e3955c9ca4df8f5e";
+(node as any).hash = "64128712f986113b7d3a19d69c77023d";
 
 export default node;

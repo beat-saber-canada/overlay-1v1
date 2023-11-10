@@ -11,9 +11,9 @@ import {
   useState,
 } from "react"
 import TeamAvatars from "@bocchi/bs-canada-overlay/data/teams"
-import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
-import { graphql, useLazyLoadQuery, useSubscription } from "react-relay"
+import { graphql, useLazyLoadQuery } from "react-relay"
 import { TeamScoreHeaderQuery } from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
+import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
 
 interface Props {
   teamIndex: number
@@ -50,9 +50,7 @@ const TeamScoreHeader = (props: Props) => {
     hideScore,
     totalRounds,
   } = props
-  const { data: currentMatchId } = trpc.currentMatchId.useQuery(undefined, {
-    refetchInterval: 1000,
-  })
+  const { data: currentMatchId } = useCurrentMatchIdQuery()
   const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
     graphql`
       query TeamScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
