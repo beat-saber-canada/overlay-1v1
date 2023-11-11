@@ -3,8 +3,9 @@
 import ScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/ScoreHeader"
 import { animated, useSpring } from "@react-spring/web"
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import MapPoolBanner from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_components/MapPoolBanner"
+import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 interface Props {
   children?: React.ReactNode
@@ -13,6 +14,12 @@ interface Props {
 const MapSelectionScoreAnimation = (props: Props) => {
   const { children } = props
   const [isMapsVisible, setIsMapsVisible] = useState(false)
+  const { data: currentScene } = trpc.currentScene.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
+  const pathname = usePathname()
+  const router = useRouter()
+
   const scoreSpring = useSpring({
     scale: isMapsVisible ? "100%" : "150%",
     top: isMapsVisible ? "4%" : "50%",
@@ -28,8 +35,7 @@ const MapSelectionScoreAnimation = (props: Props) => {
       friction: 50,
     },
     onResolve: () => {
-      if (isMapsVisible) return
-      //router.push("/match")
+      if (!isMapsVisible) router.push(`/overlay/${currentScene}`)
     },
   })
 
@@ -40,19 +46,9 @@ const MapSelectionScoreAnimation = (props: Props) => {
   }, [])
 
   useEffect(() => {
-    // Just doing this for local testing
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "m") {
-        setIsMapsVisible(false)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyPress)
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress)
-    }
-  }, [])
+    if (!!currentScene && pathname !== `/overlay/${currentScene}`)
+      setIsMapsVisible(false)
+  }, [currentScene, pathname])
 
   return (
     <>

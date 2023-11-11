@@ -3,7 +3,8 @@
 import { useSpring, animated } from "@react-spring/web"
 import { useEffect, useState } from "react"
 import ScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/ScoreHeader"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 interface Props {
   children: React.ReactNode
@@ -11,9 +12,14 @@ interface Props {
 
 const MatchScoreAnimation = (props: Props) => {
   const { children } = props
-  const router = useRouter()
   const [isMatchVisible, setisMatchVisible] = useState(false)
   const [hideScore, setHideScore] = useState(true)
+  const { data: currentScene } = trpc.currentScene.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
+  const pathname = usePathname()
+  const router = useRouter()
+
   const scoreSpring = useSpring({
     scale: isMatchVisible ? "100%" : "150%",
     top: isMatchVisible ? "4%" : "50%",
@@ -33,7 +39,7 @@ const MatchScoreAnimation = (props: Props) => {
       if (isMatchVisible) return
       setHideScore(true)
       setTimeout(() => {
-        //router.push("/map-selection")
+        router.push(`/overlay/${currentScene}`)
       }, 1000)
     },
   })
@@ -48,19 +54,9 @@ const MatchScoreAnimation = (props: Props) => {
   }, [])
 
   useEffect(() => {
-    // Just doing this for local testing
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "m") {
-        setisMatchVisible(false)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyPress)
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress)
-    }
-  }, [])
+    if (!!currentScene && pathname !== `/overlay/${currentScene}`)
+      setisMatchVisible(false)
+  }, [currentScene, pathname])
 
   return (
     <>
