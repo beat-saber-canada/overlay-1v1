@@ -8,9 +8,6 @@ import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks
 
 interface Props {
   teamIndex: number
-  streamUrl1: string
-  streamUrl2: string
-  streamUrl3: string
 }
 
 const TeamOfThree = (props: Props) => {
@@ -57,10 +54,10 @@ const TeamOfThree = (props: Props) => {
           {team?.name || `Team ${teamIndex + 1}`}
         </h1>
       </div>
-      <div className="flex flex-row items-center gap-10">
-        <PlayerVideo playerGuid={teamPlayers?.[0]?.guid} />
-        <PlayerVideo playerGuid={teamPlayers?.[1]?.guid} />
-        <PlayerVideo playerGuid={teamPlayers?.[2]?.guid} />
+      <div className="flex h-[375px] flex-row items-center gap-10">
+        {teamPlayers?.map((player) => (
+          <PlayerVideo playerGuid={player.guid} key={player.guid} />
+        ))}
       </div>
     </div>
   )

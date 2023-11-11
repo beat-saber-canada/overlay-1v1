@@ -51,7 +51,7 @@ const MatchSelect = () => {
         <SelectContent>
           {matchSelectQuery.state.matches.map((match: any) => (
             <SelectItem key={match.guid} value={match.guid}>
-              {match.teams[0].name} vs {match.teams[1].name}
+              {match.teams[0]?.name} vs {match.teams[1]?.name}
             </SelectItem>
           ))}
         </SelectContent>

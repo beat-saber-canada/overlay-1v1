@@ -45,7 +45,7 @@ const StreamDialog = (props: Props) => {
   const { mutateAsync, isLoading } =
     trpc.setStreamSettingsForPlayer.useMutation({
       onSuccess: async () => {
-        await utils.streamSettingsForPlayer.invalidate(userId)
+        await utils.streamSettingsForPlayer.invalidate()
       },
     })
   const [isOpen, setIsOpen] = useState(false)

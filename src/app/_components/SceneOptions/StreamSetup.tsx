@@ -49,7 +49,7 @@ const StreamSetup = () => {
       <label className="text-xs font-light text-gray-600">Stream Setup</label>
       <div className="flex flex-col gap-10 rounded-md p-5 outline outline-1 outline-slate-300">
         <div className="flex flex-row justify-between">
-          {playersByTeams[streamSetupQuery.matchById?.teams[0].guid]?.map(
+          {playersByTeams[streamSetupQuery.matchById?.teams[0]?.guid]?.map(
             (player) => (
               <StreamDialog
                 key={player.userId}
@@ -60,7 +60,7 @@ const StreamSetup = () => {
           )}
         </div>
         <div className="flex flex-row justify-between">
-          {playersByTeams[streamSetupQuery.matchById?.teams[1].guid]?.map(
+          {playersByTeams[streamSetupQuery.matchById?.teams[1]?.guid]?.map(
             (player) => (
               <StreamDialog
                 key={player.userId}

@@ -81,27 +81,33 @@ const CurrentMap = () => {
 
   return (
     <div className="flex h-[388px] w-[260px] flex-col items-center gap-5 overflow-hidden rounded-md bg-black p-5 text-center text-white shadow shadow-black">
-      <h1 className="text-3xl font-semibold">Now Playing</h1>
-      <img
-        className="aspect-square w-40 rounded-md"
-        src={mapDetails?.versions?.[0].coverURL}
-      />
-      <animated.span
-        className="line-clamp-1 overflow-hidden whitespace-nowrap text-2xl"
-        style={pauseAnimation ? {} : { ...spring }}
-        ref={spanRef}
-      >
-        {currentMapQuery.matchById?.currentMap?.name} -{" "}
-        {mapDetails?.metadata.songAuthorName!} (
-        {mapDetails?.metadata.levelAuthorName!})
-      </animated.span>
-      <div className="flex flex-row items-center gap-2">
-        {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
-        <div className="flex flex-row gap-2 rounded-md bg-white p-2">
-          <img src="/Beatsaver.svg" className="w-5" />
-          <span className="text-lg text-black">{mapDetails?.id}</span>
-        </div>
-      </div>
+      {true ? (
+        <>
+          <h1 className="text-3xl font-semibold">Now Playing</h1>
+          <img
+            className="aspect-square w-40 rounded-md"
+            src={mapDetails?.versions?.[0].coverURL}
+          />
+          <animated.span
+            className="line-clamp-1 overflow-hidden whitespace-nowrap text-2xl"
+            style={pauseAnimation ? {} : { ...spring }}
+            ref={spanRef}
+          >
+            {currentMapQuery.matchById?.currentMap?.name} -{" "}
+            {mapDetails?.metadata.songAuthorName!} (
+            {mapDetails?.metadata.levelAuthorName!})
+          </animated.span>
+          <div className="flex flex-row items-center gap-2">
+            {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
+            <div className="flex flex-row gap-2 rounded-md bg-white p-2">
+              <img src="/Beatsaver.svg" className="w-5" />
+              <span className="text-lg text-black">{mapDetails?.id}</span>
+            </div>
+          </div>
+        </>
+      ) : (
+        <h1 className="text-3xl font-semibold">No Map Selected</h1>
+      )}
     </div>
   )
 }

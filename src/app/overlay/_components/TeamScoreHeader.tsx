@@ -59,7 +59,7 @@ const useCalculateScore = (
   )
   const score =
     scores?.reduce((currentScore, score) => currentScore + score.score, 0) ?? 0
-  const accuracy = score / (scores?.[0]?.maxScore ?? 1)
+  const accuracy = (score / (scores?.[0]?.maxScore ?? 1)) * 100
 
   return {
     score,
@@ -153,7 +153,9 @@ const TeamScoreHeader = (props: Props) => {
           reverse && "flex-row-reverse"
         } `}
       >
-        <span className="text-xl font-bold">{team?.name}</span>
+        <span className="text-xl font-bold">
+          {team?.name ?? `Team ${teamIndex + 1}`}
+        </span>
         <img
           src={pictureUrl ?? "/oculus.png"}
           className="aspect-square h-20 rounded-md"

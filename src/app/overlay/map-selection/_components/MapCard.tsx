@@ -35,12 +35,14 @@ const MapCard = (props: Props) => {
       refetchInterval: 1000,
     },
   )
-  const pictureUrl = map.mapDetails?.versions?.[0].coverURL!
 
   return (
     <div className={background({ state: mapPoolState ?? undefined })}>
       <div className="flex flex-row items-center gap-5">
-        <img className="aspect-square h-24 rounded-md" src={pictureUrl} />
+        <img
+          className="aspect-square h-24 rounded-md"
+          src={map.mapDetails?.versions?.[0].coverURL}
+        />
         <div className="flex w-[420px] flex-col overflow-hidden">
           <span className="line-clamp-1 overflow-ellipsis text-2xl text-white">
             {map.mapDetails.metadata.songName} -{" "}
