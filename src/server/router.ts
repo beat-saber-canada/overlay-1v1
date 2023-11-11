@@ -95,6 +95,7 @@ export const appRouter = router({
   }),
   setCurrentMapPoolIndex: procedure.input(z.number()).mutation(async (opts) => {
     await opts.ctx.state.set("currentMapPoolIndex", opts.input)
+    await opts.ctx.state.set("currentMapPoolState", null)
     return opts.input
   }),
   mapPoolStateForMap: procedure.input(z.string()).query(async (opts) => {
