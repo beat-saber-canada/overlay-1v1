@@ -1,20 +1,18 @@
 "use client"
 
 import ReactPlayer from "react-player"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
 import { PlayerVideoQuery } from "@bocchi/bs-canada-overlay/__generated__/PlayerVideoQuery.graphql"
+import sanitizeString from "@bocchi/bs-canada-overlay/utils/sanitizeString"
 
 interface Props {
   playerGuid: string | null
-  streamUrl: string
-  muted?: boolean
 }
 
 const PlayerVideo = (props: Props) => {
-  const { streamUrl, muted } = props
   const [isClient, setIsClient] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const { data: currentMatchId } = useCurrentMatchIdQuery()
@@ -47,6 +45,22 @@ const PlayerVideo = (props: Props) => {
       enabled: !!currentPlayer?.userId,
     },
   )
+  const { data: streamSettings } = trpc.streamSettingsForPlayer.useQuery(
+    currentPlayer?.userId!,
+    {
+      enabled: !!currentPlayer?.userId,
+      refetchInterval: 1000,
+    },
+  )
+  const streamUrl = useMemo(() => {
+    if (!streamSettings?.key)
+      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/${sanitizeString(
+        currentPlayer?.name ?? "",
+      )}`
+    if (streamSettings?.type === "rtmp")
+      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/${streamSettings.key}`
+    return streamSettings?.key
+  }, [currentPlayer?.name, streamSettings?.key, streamSettings?.type])
   const score = playerVideoQuery?.matchById?.scores?.find(
     (score) => score.ownerGuid === props.playerGuid,
   )
@@ -75,7 +89,7 @@ const PlayerVideo = (props: Props) => {
       <div className="aspect-video h-[250px]">
         <ReactPlayer
           url={streamUrl}
-          muted={muted}
+          muted={!(streamSettings?.enableAudio ?? false)}
           playing={isPlaying}
           width="100%"
           height="100%"
