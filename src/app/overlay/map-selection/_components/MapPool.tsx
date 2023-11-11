@@ -4,7 +4,9 @@ import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import MapCard from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_components/MapCard"
 
 const MapPool = () => {
-  const { data: mapPool, isFetched } = trpc.currentMapPool.useQuery()
+  const { data: mapPool, isFetched } = trpc.currentMapPool.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
 
   if (!isFetched) return null
 

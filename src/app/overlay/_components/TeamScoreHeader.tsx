@@ -93,6 +93,9 @@ const TeamScoreHeader = (props: Props) => {
       }
     `,
     { currentMatchId: currentMatchId, skip: !currentMatchId },
+    {
+      networkCacheConfig: { poll: 500 },
+    },
   )
   const team = teamScoreHeaderQuery?.matchById?.teams?.[teamIndex]
   const pictureUrl = useMemo(

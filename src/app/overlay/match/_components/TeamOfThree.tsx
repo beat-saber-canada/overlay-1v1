@@ -34,6 +34,9 @@ const TeamOfThree = (props: Props) => {
       }
     `,
     { currentMatchId: currentMatchId, skip: !currentMatchId },
+    {
+      networkCacheConfig: { poll: 500 },
+    },
   )
   const team = useMemo(
     () => teamOfThreeQuery?.matchById?.teams?.[teamIndex],
@@ -55,21 +58,9 @@ const TeamOfThree = (props: Props) => {
         </h1>
       </div>
       <div className="flex flex-row items-center gap-10">
-        <PlayerVideo
-          playerGuid={teamPlayers?.[0]?.guid}
-          streamUrl={props.streamUrl1}
-          muted
-        />
-        <PlayerVideo
-          playerGuid={teamPlayers?.[1]?.guid}
-          streamUrl={props.streamUrl2}
-          muted
-        />
-        <PlayerVideo
-          playerGuid={teamPlayers?.[2]?.guid}
-          streamUrl={props.streamUrl3}
-          muted
-        />
+        <PlayerVideo playerGuid={teamPlayers?.[0]?.guid} />
+        <PlayerVideo playerGuid={teamPlayers?.[1]?.guid} />
+        <PlayerVideo playerGuid={teamPlayers?.[2]?.guid} />
       </div>
     </div>
   )

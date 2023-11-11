@@ -35,6 +35,9 @@ const PlayerVideo = (props: Props) => {
       }
     `,
     { currentMatchId: currentMatchId, skip: !currentMatchId },
+    {
+      networkCacheConfig: { poll: 500 },
+    },
   )
   const currentPlayer = playerVideoQuery?.matchById?.players?.find(
     (player) => player.guid === props.playerGuid,

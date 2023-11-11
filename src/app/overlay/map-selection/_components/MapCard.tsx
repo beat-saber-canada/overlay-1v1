@@ -31,6 +31,9 @@ const MapCard = (props: Props) => {
   const { map } = props
   const { data: mapPoolState } = trpc.mapPoolStateForMap.useQuery(
     map.mapDetails.id,
+    {
+      refetchInterval: 1000,
+    },
   )
   const pictureUrl = map.mapDetails?.versions?.[0].coverURL!
 

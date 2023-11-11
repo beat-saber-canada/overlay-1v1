@@ -66,6 +66,9 @@ const CurrentMap = () => {
       }
     `,
     { currentMatchId: currentMatchId, skip: !currentMatchId },
+    {
+      networkCacheConfig: { poll: 500 },
+    },
   )
   const { data: mapDetails } = trpc.beatSaverMapDetails.useQuery(
     currentMapQuery.matchById?.currentMap?.hash!,
