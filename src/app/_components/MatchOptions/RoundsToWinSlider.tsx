@@ -18,8 +18,9 @@ const RoundsToWinSlider = () => {
       utils.roundsToWin.setData(undefined, context?.previousValue)
       setLocalValue([context?.previousValue!])
     },
-    onSuccess: (returnVal) => {
+    onSuccess: async (returnVal) => {
       utils.roundsToWin.setData(undefined, returnVal)
+      await utils.roundsWon.invalidate()
       setLocalValue([returnVal])
     },
   })

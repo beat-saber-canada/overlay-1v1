@@ -1,6 +1,6 @@
 "use client"
 
-import OverallScore from "@bocchi/bs-canada-overlay/app/overlay/_components/OverallScore"
+import RoundsWonDisplay from "@bocchi/bs-canada-overlay/app/overlay/_components/RoundsWonDisplay"
 import { useSpring, animated } from "@react-spring/web"
 import {
   DependencyList,
@@ -17,12 +17,11 @@ import {
   TeamScoreHeaderQuery$data,
 } from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
 import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
+import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 interface Props {
   teamIndex: number
   reverse?: boolean
-  overallScore: number
-  totalRounds: number
   hideScore?: boolean
 }
 
@@ -69,7 +68,7 @@ const useCalculateScore = (
 }
 
 const TeamScoreHeader = (props: Props) => {
-  const { teamIndex, reverse, overallScore, hideScore, totalRounds } = props
+  const { teamIndex, reverse, hideScore } = props
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
     graphql`
@@ -116,6 +115,13 @@ const TeamScoreHeader = (props: Props) => {
     immediate: !mounted,
   })
 
+  const { data: roundsWon } = trpc.roundsWon.useQuery(teamIndex, {
+    refetchInterval: 1000,
+  })
+  const { data: roundsToWin } = trpc.roundsToWin.useQuery(undefined, {
+    refetchInterval: 1000,
+  })
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -151,9 +157,9 @@ const TeamScoreHeader = (props: Props) => {
         />
       </div>
 
-      <OverallScore
-        score={overallScore}
-        totalRounds={totalRounds}
+      <RoundsWonDisplay
+        roundsWon={roundsWon ?? 0}
+        roundsToWin={roundsToWin ?? 1}
         reverse={reverse}
       />
     </div>
