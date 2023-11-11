@@ -68,9 +68,7 @@ const PlayerVideo = (props: Props) => {
   const score = playerVideoQuery?.matchById?.scores?.find(
     (score) => score.ownerGuid === props.playerGuid,
   )
-  const accuracy = Math.round(
-    ((score?.score ?? 0) / (score?.maxScore ?? 1)) * 100,
-  )
+  const accuracy = ((score?.score ?? 0) / (score?.maxScore ?? 1)) * 100
   const [tweenedScore, setTweenedScore] = useState({
     combo: 0,
     accuracy: 0,

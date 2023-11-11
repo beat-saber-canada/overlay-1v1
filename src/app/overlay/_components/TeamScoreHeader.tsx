@@ -59,7 +59,8 @@ const useCalculateScore = (
   )
   const score =
     scores?.reduce((currentScore, score) => currentScore + score.score, 0) ?? 0
-  const accuracy = (score / (scores?.[0]?.maxScore ?? 1)) * 100
+  const accuracy =
+    (score / ((scores?.[0]?.maxScore ?? 1) * (scores?.length ?? 1))) * 100
 
   return {
     score,
