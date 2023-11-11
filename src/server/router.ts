@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { procedure, router } from "@bocchi/bs-canada-overlay/server/trpc"
 import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
+import MapPools from "@bocchi/bs-canada-overlay/data/MapPools"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -66,6 +67,26 @@ export const appRouter = router({
       await opts.ctx.state.set(`team${opts.input.index}`, team)
       return opts.input
     }),
+  currentMapPool: procedure.query(async (opts) => {
+    const currentMapPoolIndex =
+      (await opts.ctx.state.get("currentMapPoolIndex")) ?? 0
+    const mapPool = MapPools[currentMapPoolIndex]
+    const mapKeys = mapPool.maps.map((map) => map.key)
+    const mapDetailsResponse = await fetch(
+      `https://api.beatsaver.com/maps/ids/${mapKeys.join("%2C")}`,
+    )
+    const mapDetails = (await mapDetailsResponse.json()) as {
+      [key: string]: BeatSaverMap
+    }
+    const mapDetailsMerged = mapPool.maps.map((map) => ({
+      difficulty: map.difficulty,
+      mapDetails: mapDetails[map.key],
+    }))
+    return {
+      ...mapPool,
+      maps: mapDetailsMerged,
+    }
+  }),
   scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(
       `https://scoresaber.com/api/player/${opts.input}/basic`,

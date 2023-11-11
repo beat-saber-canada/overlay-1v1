@@ -27,7 +27,7 @@ const SceneSelect = () => {
   if (!isFetched) return null
 
   return (
-    <Card className="w-[500px]">
+    <Card className="h-fit w-[500px]">
       <CardHeader>
         <CardTitle>Scene Options</CardTitle>
       </CardHeader>

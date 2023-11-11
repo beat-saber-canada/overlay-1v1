@@ -11,7 +11,7 @@ import RoundsWonSlider from "@bocchi/bs-canada-overlay/app/_components/MatchOpti
 
 const MatchOptions = () => {
   return (
-    <Card className="w-[500px]">
+    <Card className="h-fit w-[500px]">
       <CardHeader>
         <CardTitle>Match Options</CardTitle>
       </CardHeader>

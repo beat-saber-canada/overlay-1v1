@@ -11,7 +11,8 @@ interface TeamState extends JsonObject {
 interface State extends KvsLocalStorageSchema {
   scene: string | null
   matchId: string | null
-  roundsToWin: number
+  roundsToWin: number | null
+  currentMapPoolIndex: number | null
   team0: TeamState | null
   team1: TeamState | null
 }

@@ -61,7 +61,7 @@ const MapSelectionScoreAnimation = (props: Props) => {
         style={{ ...contentSpring }}
       >
         <div className="flex h-20" />
-        <div className="flex flex-wrap items-center gap-5">{children}</div>
+        {children}
       </animated.div>
       <animated.div
         style={{

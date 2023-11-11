@@ -89,8 +89,8 @@ const CurrentMap = () => {
         ref={spanRef}
       >
         {currentMapQuery.matchById?.currentMap?.name} -{" "}
-        {mapDetails?.metadata.songAuthorName} (
-        {mapDetails?.metadata.levelAuthorName})
+        {mapDetails?.metadata.songAuthorName!} (
+        {mapDetails?.metadata.levelAuthorName!})
       </animated.span>
       <div className="flex flex-row items-center gap-2">
         {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
