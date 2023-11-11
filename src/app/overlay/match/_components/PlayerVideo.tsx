@@ -66,7 +66,10 @@ const PlayerVideo = (props: Props) => {
   return (
     <div className="flex flex-col rounded-md bg-black">
       <div className="flex flex-row items-center gap-5 px-2 py-2 text-white">
-        <img src={playerPictureUrl ?? undefined} className="h-16 w-16" />
+        <img
+          src={playerPictureUrl ?? "/oculus.png"}
+          className="h-16 w-16 rounded-sm"
+        />
         <span className="text-2xl font-semibold">{currentPlayer?.name}</span>
       </div>
       <div className="aspect-video h-[250px]">

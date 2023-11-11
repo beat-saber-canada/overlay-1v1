@@ -1,19 +1,19 @@
 import { kvsLocalStorage } from "@kvs/node-localstorage"
 import type { KvsLocalStorageSchema } from "@kvs/node-localstorage"
 import { inferAsyncReturnType } from "@trpc/server"
+import { JsonObject } from "@kvs/storage"
+
+interface TeamState extends JsonObject {
+  roundsWon: number
+  nameOverride?: string
+}
 
 interface State extends KvsLocalStorageSchema {
   scene: string | null
   matchId: string | null
-  scoreRequiredToWin: number | null
-  team0: {
-    overallScore: number
-    nameOverride?: string
-  } | null
-  team1: {
-    overallScore: number
-    nameOverride?: string
-  } | null
+  roundsToWin: number
+  team0: TeamState | null
+  team1: TeamState | null
 }
 
 const createContext = async () => ({

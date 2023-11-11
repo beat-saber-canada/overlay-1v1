@@ -145,7 +145,10 @@ const TeamScoreHeader = (props: Props) => {
         } `}
       >
         <span className="text-xl font-bold">{team?.name}</span>
-        <img src={pictureUrl} className="aspect-square h-20 rounded-md" />
+        <img
+          src={pictureUrl ?? "/oculus.png"}
+          className="aspect-square h-20 rounded-md"
+        />
       </div>
 
       <OverallScore
