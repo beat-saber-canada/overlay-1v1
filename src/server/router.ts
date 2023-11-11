@@ -87,6 +87,16 @@ export const appRouter = router({
       maps: mapDetailsMerged,
     }
   }),
+  mapPoolNames: procedure.query(async (opts) => {
+    return MapPools.map((pool) => pool.name)
+  }),
+  currentMapPoolIndex: procedure.query(async (opts) => {
+    return (await opts.ctx.state.get("currentMapPoolIndex")) ?? 0
+  }),
+  setCurrentMapPoolIndex: procedure.input(z.number()).mutation(async (opts) => {
+    await opts.ctx.state.set("currentMapPoolIndex", opts.input)
+    return opts.input
+  }),
   scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(
       `https://scoresaber.com/api/player/${opts.input}/basic`,

@@ -1,5 +1,6 @@
 import SceneSelect from "@bocchi/bs-canada-overlay/app/_components/SceneSelect"
 import MatchOptions from "@bocchi/bs-canada-overlay/app/_components/MatchOptions/MatchOptions"
+import MapPoolOptions from "@bocchi/bs-canada-overlay/app/_components/MapPoolOptions/MapPoolOptions"
 
 const DashboardPage = () => {
   return (
@@ -8,6 +9,7 @@ const DashboardPage = () => {
       <div className="flex flex-wrap gap-5">
         <SceneSelect />
         <MatchOptions />
+        <MapPoolOptions />
       </div>
     </div>
   )
