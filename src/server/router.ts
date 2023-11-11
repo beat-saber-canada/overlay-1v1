@@ -2,6 +2,7 @@ import { z } from "zod"
 import { procedure, router } from "@bocchi/bs-canada-overlay/server/trpc"
 import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
 import MapPools from "@bocchi/bs-canada-overlay/data/MapPools"
+import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -120,6 +121,44 @@ export const appRouter = router({
 
       await opts.ctx.state.set("currentMapPoolState", currentMapPoolState)
       return opts.input
+    }),
+  streamSettingsForPlayer: procedure.input(z.string()).query(async (opts) => {
+    const overriddenStreamUrl = (
+      await opts.ctx.state.get("overriddenStreamUrls")
+    )?.[opts.input]
+    const enableAudio =
+      (await opts.ctx.state.get("unmutedPlayerId")) === opts.input
+    return {
+      ...overriddenStreamUrl,
+      enableAudio,
+    }
+  }),
+  setStreamSettingsForPlayer: procedure
+    .input(
+      z.object({
+        playerId: z.string(),
+        settings: streamSchema,
+      }),
+    )
+    .mutation(async (opts) => {
+      const overriddenStreamUrls =
+        (await opts.ctx.state.get("overriddenStreamUrls")) ?? {}
+      if (!opts.input.settings.key)
+        delete overriddenStreamUrls[opts.input.playerId]
+      else
+        overriddenStreamUrls[opts.input.playerId] = {
+          type: opts.input.settings.type,
+          key: opts.input.settings.key,
+        }
+
+      await opts.ctx.state.set("overriddenStreamUrls", overriddenStreamUrls)
+
+      if (opts.input.settings.enableAudio)
+        await opts.ctx.state.set("unmutedPlayerId", opts.input.playerId)
+      else if (
+        (await opts.ctx.state.get("unmutedPlayerId")) === opts.input.playerId
+      )
+        await opts.ctx.state.set("unmutedPlayerId", null)
     }),
   scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(

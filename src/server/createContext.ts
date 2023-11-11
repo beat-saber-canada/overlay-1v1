@@ -12,6 +12,10 @@ interface CurrentMapPoolState extends JsonObject {
   [key: string]: "picked" | "banned" | "tiebreaker"
 }
 
+interface OverriddenStreamUrls extends JsonObject {
+  [key: string]: { type: "twitch" | "rtmp"; key: string }
+}
+
 interface State extends KvsLocalStorageSchema {
   scene: string | null
   matchId: string | null
@@ -20,6 +24,8 @@ interface State extends KvsLocalStorageSchema {
   team0: TeamState | null
   team1: TeamState | null
   currentMapPoolState: CurrentMapPoolState | null
+  overriddenStreamUrls: OverriddenStreamUrls | null
+  unmutedPlayerId: string | null
 }
 
 const createContext = async () => ({
