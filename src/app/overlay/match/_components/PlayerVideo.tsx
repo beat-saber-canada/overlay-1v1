@@ -7,6 +7,7 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
 import { PlayerVideoQuery } from "@bocchi/bs-canada-overlay/__generated__/PlayerVideoQuery.graphql"
 import sanitizeString from "@bocchi/bs-canada-overlay/utils/sanitizeString"
+import { useSpring } from "@react-spring/web"
 
 interface Props {
   playerGuid: string | null
@@ -57,11 +58,11 @@ const PlayerVideo = (props: Props) => {
   )
   const streamUrl = useMemo(() => {
     if (!streamSettings?.key)
-      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/${sanitizeString(
+      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/bsc/${sanitizeString(
         currentPlayer?.name ?? "",
-      )}`
+      )}/index.m3u8`
     if (streamSettings?.type === "rtmp")
-      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/${streamSettings.key}`
+      return `${process.env.NEXT_PUBLIC_STREAM_BASE_URL}/bsc/${streamSettings.key}/index.m3u8`
     return streamSettings?.key
   }, [currentPlayer?.name, streamSettings?.key, streamSettings?.type])
   const score = playerVideoQuery?.matchById?.scores?.find(
@@ -70,6 +71,25 @@ const PlayerVideo = (props: Props) => {
   const accuracy = Math.round(
     ((score?.score ?? 0) / (score?.maxScore ?? 1)) * 100,
   )
+  const [tweenedScore, setTweenedScore] = useState({
+    combo: 0,
+    accuracy: 0,
+  })
+  useSpring({
+    combo: score?.combo ?? 0,
+    accuracy,
+
+    onChange: (result) => {
+      setTweenedScore({
+        combo: result.value.combo,
+        accuracy: result.value.accuracy,
+      })
+    },
+
+    config: {
+      duration: 500,
+    },
+  })
 
   useEffect(() => {
     setIsClient(true)
@@ -99,8 +119,8 @@ const PlayerVideo = (props: Props) => {
         />
       </div>
       <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
-        <span className="text-xl">{score?.combo ?? 0}x</span>
-        <span className="text-xl">{accuracy.toFixed(2)}%</span>
+        <span className="text-xl">{tweenedScore.combo.toFixed(0)}x</span>
+        <span className="text-xl">{tweenedScore.accuracy.toFixed(2)}%</span>
       </div>
     </div>
   )

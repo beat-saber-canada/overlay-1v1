@@ -107,6 +107,26 @@ const TeamScoreHeader = (props: Props) => {
     team?.guid,
   )
 
+  const [tweenedScore, setTweenedScore] = useState({
+    score: 0,
+    accuracy: 0,
+  })
+  useSpring({
+    score,
+    accuracy,
+
+    onChange: (result) => {
+      setTweenedScore({
+        score: result.value.score,
+        accuracy: result.value.accuracy,
+      })
+    },
+
+    config: {
+      duration: 500,
+    },
+  })
+
   const { width, ref: scoreRef } = useObserveMaxWidth<HTMLDivElement>([
     score,
     accuracy,
@@ -144,8 +164,10 @@ const TeamScoreHeader = (props: Props) => {
         }
         ref={scoreRef}
       >
-        <span className="text-xl font-semibold">{accuracy.toFixed(2)}%</span>
-        <span className="text-sm">{score}</span>
+        <span className="text-xl font-semibold">
+          {tweenedScore.accuracy.toFixed(2)}%
+        </span>
+        <span className="text-sm">{tweenedScore.score.toFixed(0)}</span>
       </animated.div>
 
       <div
