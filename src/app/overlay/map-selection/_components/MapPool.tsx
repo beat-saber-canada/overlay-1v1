@@ -12,7 +12,7 @@ const MapPool = () => {
     <div className="flex flex-wrap items-center gap-5">
       {!!mapPool &&
         mapPool.maps.map((map) => (
-          <MapCard map={map} state="none" key={map.mapDetails.id} />
+          <MapCard map={map} key={map.mapDetails.id} />
         ))}
     </div>
   )

@@ -34,7 +34,7 @@ module.exports = {
         "maple-red": "#FF2A2A",
         "maple-red-dark": "#FF182E",
         "picked-green": "#2ADB00",
-        "tiebraker-yellow": "#FBB03B",
+        "tiebreaker-yellow": "#FBB03B",
         "expertplus-purple": "#935BE2",
         "hard-blue": "#2091E2",
       },

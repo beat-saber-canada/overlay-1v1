@@ -10,7 +10,7 @@ const getDifficultyColor = (difficulty: Difficulty) => {
     case Difficulty.Easy:
       return "bg-picked-green"
     case Difficulty.Normal:
-      return "bg-tiebraker-yellow"
+      return "bg-tiebreaker-yellow"
     case Difficulty.Hard:
       return "bg-hard-blue"
     case Difficulty.Expert:
