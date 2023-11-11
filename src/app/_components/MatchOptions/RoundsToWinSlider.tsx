@@ -2,7 +2,7 @@
 
 import { Slider } from "@bocchi/bs-canada-overlay/components/ui/slider"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const RoundsToWinSlider = () => {
   const utils = trpc.useUtils()
@@ -16,14 +16,17 @@ const RoundsToWinSlider = () => {
     },
     onError: (err, value, context) => {
       utils.roundsToWin.setData(undefined, context?.previousValue)
-      setLocalValue([context?.previousValue!])
     },
     onSuccess: async (returnVal) => {
       utils.roundsToWin.setData(undefined, returnVal)
       await utils.roundsWon.invalidate()
-      setLocalValue([returnVal])
     },
   })
+
+  useEffect(() => {
+    if (roundsToWin === undefined) return
+    setLocalValue([roundsToWin])
+  }, [roundsToWin])
 
   if (!isFetched) return null
 

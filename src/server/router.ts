@@ -97,6 +97,29 @@ export const appRouter = router({
     await opts.ctx.state.set("currentMapPoolIndex", opts.input)
     return opts.input
   }),
+  mapPoolStateForMap: procedure.input(z.string()).query(async (opts) => {
+    return (
+      (await opts.ctx.state.get("currentMapPoolState"))?.[opts.input] ?? null
+    )
+  }),
+  setMapPoolStateForMap: procedure
+    .input(
+      z.object({
+        mapKey: z.string(),
+        state: z.enum(["picked", "banned", "tiebreaker"]).nullable(),
+      }),
+    )
+    .mutation(async (opts) => {
+      const currentMapPoolState =
+        (await opts.ctx.state.get("currentMapPoolState")) ?? {}
+
+      if (opts.input.state === null)
+        delete currentMapPoolState[opts.input.mapKey]
+      else currentMapPoolState[opts.input.mapKey] = opts.input.state
+
+      await opts.ctx.state.set("currentMapPoolState", currentMapPoolState)
+      return opts.input
+    }),
   scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(
       `https://scoresaber.com/api/player/${opts.input}/basic`,

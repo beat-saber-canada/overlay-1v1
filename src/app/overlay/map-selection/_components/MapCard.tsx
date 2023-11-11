@@ -4,10 +4,10 @@ import DifficultyBadge from "@bocchi/bs-canada-overlay/app/overlay/_components/D
 import { inferRouterOutputs } from "@trpc/server"
 import { AppRouter } from "@bocchi/bs-canada-overlay/server/router"
 import { cva } from "class-variance-authority"
+import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 interface Props {
   map: inferRouterOutputs<AppRouter>["currentMapPool"]["maps"][0]
-  state?: "picked" | "banned" | "tiebreaker"
 }
 
 const background = cva(
@@ -28,11 +28,14 @@ const background = cva(
 )
 
 const MapCard = (props: Props) => {
-  const { map, state } = props
+  const { map } = props
+  const { data: mapPoolState } = trpc.mapPoolStateForMap.useQuery(
+    map.mapDetails.id,
+  )
   const pictureUrl = map.mapDetails?.versions?.[0].coverURL!
 
   return (
-    <div className={background({ state })}>
+    <div className={background({ state: mapPoolState ?? undefined })}>
       <div className="flex flex-row items-center gap-5">
         <img className="aspect-square h-24 rounded-md" src={pictureUrl} />
         <div className="flex max-w-[400px] flex-col overflow-hidden">

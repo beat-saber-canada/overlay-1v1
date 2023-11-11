@@ -8,6 +8,10 @@ interface TeamState extends JsonObject {
   nameOverride?: string
 }
 
+interface CurrentMapPoolState extends JsonObject {
+  [key: string]: "picked" | "banned" | "tiebreaker"
+}
+
 interface State extends KvsLocalStorageSchema {
   scene: string | null
   matchId: string | null
@@ -15,6 +19,7 @@ interface State extends KvsLocalStorageSchema {
   currentMapPoolIndex: number | null
   team0: TeamState | null
   team1: TeamState | null
+  currentMapPoolState: CurrentMapPoolState | null
 }
 
 const createContext = async () => ({
