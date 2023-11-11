@@ -74,7 +74,7 @@ const MapSelectionScoreAnimation = (props: Props) => {
       >
         <ScoreHeader hideScore />
       </animated.div>
-      <MapPoolBanner />
+      <MapPoolBanner style={{ ...contentSpring }} />
     </>
   )
 }

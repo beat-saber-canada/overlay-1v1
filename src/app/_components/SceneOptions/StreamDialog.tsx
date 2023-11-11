@@ -150,7 +150,7 @@ const StreamDialog = (props: Props) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="w-full">
               Set
             </Button>
           </form>
