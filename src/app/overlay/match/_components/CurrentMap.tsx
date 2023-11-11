@@ -10,25 +10,25 @@ import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 const useObserveElementWidth = <T extends HTMLElement>() => {
   const [width, setWidth] = useState(0)
-  const ref = useRef<T>(null)
+  const [ref, setRef] = useState<T | null>(null)
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
       setWidth(entries[0].contentRect.width)
     })
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    if (ref) {
+      observer.observe(ref)
     }
 
     return () => {
-      ref.current && observer.unobserve(ref.current)
+      ref && observer.unobserve(ref)
     }
-  }, [])
+  }, [ref])
 
   return {
     width,
-    ref,
+    ref: setRef,
   }
 }
 
@@ -38,7 +38,7 @@ const useTitleAnimation = () => {
   const spring = useSpring({
     from: { x: width / 2 - 100 },
     to: { x: 100 - width / 2 },
-    loop: { reverse: true, delay: 1000 },
+    loop: { reverse: true, delay: 500 },
     reset: true,
     config: { duration: width * 15 },
     pause: pauseAnimation,
@@ -80,8 +80,8 @@ const CurrentMap = () => {
   const { pauseAnimation, spring, spanRef } = useTitleAnimation()
 
   return (
-    <div className="flex h-[388px] w-[260px] flex-col items-center gap-5 overflow-hidden rounded-md bg-black p-5 text-center text-white shadow shadow-black">
-      {true ? (
+    <div className="mr-12 mt-20 flex h-[388px] w-[260px] scale-125 flex-col items-center gap-5 overflow-hidden rounded-md bg-black p-5 text-center text-white shadow shadow-black">
+      {!!mapDetails ? (
         <>
           <h1 className="text-3xl font-semibold">Now Playing</h1>
           <img
