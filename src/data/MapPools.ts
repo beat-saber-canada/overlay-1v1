@@ -213,7 +213,7 @@ const MapPools = [
         difficulty: Difficulty.ExpertPlus,
       },
       {
-        key: "366b3",
+        key: "37098",
         difficulty: Difficulty.Easy,
       },
       {
