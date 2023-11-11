@@ -160,6 +160,17 @@ export const appRouter = router({
       )
         await opts.ctx.state.set("unmutedPlayerId", null)
     }),
+  currentMapPoolBanner: procedure.query(async (opts) => {
+    return (
+      (await opts.ctx.state.get("currentMapPoolBanner")) ?? "Winners_Round1"
+    )
+  }),
+  setCurrentMapPoolBanner: procedure
+    .input(z.string())
+    .mutation(async (opts) => {
+      await opts.ctx.state.set("currentMapPoolBanner", opts.input)
+      return opts.input
+    }),
   scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(
       `https://scoresaber.com/api/player/${opts.input}/basic`,

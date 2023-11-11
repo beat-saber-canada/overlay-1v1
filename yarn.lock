@@ -2785,6 +2785,13 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-audio-viz@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-audio-viz/-/react-audio-viz-0.0.4.tgz#e368b9d8e24563c3a9abb093bfa36f53eb59e7e1"
+  integrity sha512-ibpf8RF9MollWEapf3t0VdUTD7TE8MtQa/tEf3SE0MsiqeSefHGh+U/lZFxCNWQeSdLsnnFzPqTxeSU03e8bnQ==
+  dependencies:
+    resize-observer-polyfill "^1.5.1"
+
 react-dom@^18:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
@@ -2936,6 +2943,11 @@ relay-runtime@16.0.0:
     "@babel/runtime" "^7.0.0"
     fbjs "^3.0.2"
     invariant "^2.2.4"
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-from@^4.0.0:
   version "4.0.0"

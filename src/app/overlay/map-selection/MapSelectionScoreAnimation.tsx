@@ -4,6 +4,7 @@ import ScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/Score
 import { animated, useSpring } from "@react-spring/web"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import MapPoolBanner from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_components/MapPoolBanner"
 
 interface Props {
   children?: React.ReactNode
@@ -31,7 +32,6 @@ const MapSelectionScoreAnimation = (props: Props) => {
       //router.push("/match")
     },
   })
-  const router = useRouter()
 
   useEffect(() => {
     setTimeout(() => {
@@ -74,6 +74,7 @@ const MapSelectionScoreAnimation = (props: Props) => {
       >
         <ScoreHeader hideScore />
       </animated.div>
+      <MapPoolBanner />
     </>
   )
 }

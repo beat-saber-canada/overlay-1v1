@@ -21,6 +21,7 @@ interface State extends KvsLocalStorageSchema {
   matchId: string | null
   roundsToWin: number | null
   currentMapPoolIndex: number | null
+  currentMapPoolBanner: string | null
   team0: TeamState | null
   team1: TeamState | null
   currentMapPoolState: CurrentMapPoolState | null
