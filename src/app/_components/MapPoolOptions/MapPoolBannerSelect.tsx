@@ -28,7 +28,7 @@ const MapPoolBannerSelect = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <label>Current Map Pool</label>
+      <label>Current Banner Image</label>
       <Select value={`${currentMapPoolBanner ?? 0}`} onValueChange={onChange}>
         <SelectTrigger className="w-1/2">
           <SelectValue />

@@ -80,7 +80,7 @@ const CurrentMap = () => {
   const { pauseAnimation, spring, spanRef } = useTitleAnimation()
 
   return (
-    <div className="mr-12 mt-20 flex h-[388px] w-[260px] scale-125 flex-col items-center gap-5 overflow-hidden rounded-md bg-black p-5 text-center text-white shadow shadow-black">
+    <div className="mb-12 mr-12 flex h-[388px] w-[260px] scale-125 flex-col items-center gap-5 overflow-hidden rounded-md bg-black p-5 text-center text-white shadow shadow-black">
       {!!mapDetails ? (
         <>
           <h1 className="text-3xl font-semibold">Now Playing</h1>

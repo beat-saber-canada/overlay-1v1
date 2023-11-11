@@ -98,12 +98,10 @@ const PlayerVideo = (props: Props) => {
           height="100%"
         />
       </div>
-      {score && (
-        <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
-          <span className="text-xl">{score?.combo}x</span>
-          <span className="text-xl">{accuracy}%</span>
-        </div>
-      )}
+      <div className="flex flex-row items-center justify-between px-5 py-2 text-white">
+        <span className="text-xl">{score?.combo ?? 0}x</span>
+        <span className="text-xl">{accuracy.toFixed(2)}%</span>
+      </div>
     </div>
   )
 }

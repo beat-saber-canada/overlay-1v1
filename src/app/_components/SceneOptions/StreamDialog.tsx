@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -53,6 +54,15 @@ const StreamDialog = (props: Props) => {
     resolver: zodResolver(streamSchema),
   })
 
+  const onOpenChange = (isOpen: boolean) => {
+    if (isOpen) {
+      setIsOpen(true)
+      form.reset()
+      return
+    }
+    setIsOpen(false)
+  }
+
   const onSubmit = async (settings: z.infer<typeof streamSchema>) => {
     await mutateAsync({ playerId: userId!, settings })
     setIsOpen(false)
@@ -63,7 +73,7 @@ const StreamDialog = (props: Props) => {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger className="flex aspect-video w-[160px] items-center justify-center gap-2 overflow-hidden rounded-md p-2 outline outline-2 outline-black">
         {streamSettings?.enableAudio && <Volume2 />}
         <span className="overflow-hidden text-ellipsis">{name}</span>

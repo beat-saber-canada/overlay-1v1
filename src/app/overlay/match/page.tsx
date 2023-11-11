@@ -17,7 +17,7 @@ const MatchPage = () => {
         <TeamOfThree teamIndex={0} />
         <TeamOfThree teamIndex={1} />
       </div>
-      <div className="flex justify-end">
+      <div className="flex items-end justify-end">
         <CurrentMap />
       </div>
     </MatchScoreAnimation>
