@@ -111,6 +111,7 @@ const PlayerVideo = (props: Props) => {
         <ReactPlayer
           url={streamUrl}
           muted={!(streamSettings?.enableAudio ?? false)}
+          volume={streamSettings?.enableAudio ?? false ? 1 : 0}
           playing={isPlaying}
           width="100%"
           height="100%"
