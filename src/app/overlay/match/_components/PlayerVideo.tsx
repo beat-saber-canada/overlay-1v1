@@ -43,7 +43,7 @@ const PlayerVideo = (props: Props) => {
   const currentPlayer = playerVideoQuery?.matchById?.players?.find(
     (player) => player.guid === props.playerGuid,
   )
-  const { data: playerPictureUrl } = trpc.scoreSaberProfilePicture.useQuery(
+  const { data: playerPictureUrl } = trpc.playerInfo.useQuery(
     currentPlayer?.userId!,
     {
       enabled: !!currentPlayer?.userId,

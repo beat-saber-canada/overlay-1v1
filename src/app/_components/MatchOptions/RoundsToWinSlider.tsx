@@ -19,7 +19,7 @@ const RoundsToWinSlider = () => {
     },
     onSuccess: async (returnVal) => {
       utils.roundsToWin.setData(undefined, returnVal)
-      await utils.roundsWon.invalidate()
+      await utils.player.getPlayer.invalidate()
     },
   })
 

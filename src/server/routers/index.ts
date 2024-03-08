@@ -3,6 +3,7 @@ import { procedure, router } from "@bocchi/bs-canada-overlay/server/trpc"
 import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
 import MapPools from "@bocchi/bs-canada-overlay/data/MapPools"
 import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
+import { playerRouter } from "./player"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -15,13 +16,13 @@ export const appRouter = router({
     return (await opts.ctx.state.get("scene")) ?? "map-selection"
   }),
   setCurrentMatchId: procedure
-    .input(z.string().uuid())
+    .input(z.string().uuid().nullable())
     .mutation(async (opts) => {
       await opts.ctx.state.set("matchId", opts.input)
       return opts.input
     }),
-  currentMatchId: procedure.query((opts) => {
-    return opts.ctx.state.get("matchId")
+  currentMatchId: procedure.query(async (opts) => {
+    return (await opts.ctx.state.get("matchId")) ?? null
   }),
   roundsToWin: procedure.query(async (opts) => {
     return (await opts.ctx.state.get("roundsToWin")) ?? 1
@@ -31,41 +32,25 @@ export const appRouter = router({
     .mutation(async (opts) => {
       await opts.ctx.state.set("roundsToWin", opts.input)
       // Decrease rounds won if rounds to win is less than rounds won
-      const team0 = (await opts.ctx.state.get("team0")) ?? { roundsWon: 0 }
-      const team1 = (await opts.ctx.state.get("team1")) ?? { roundsWon: 0 }
-
-      if (team0.roundsWon > opts.input) {
-        team0.roundsWon = opts.input
-        await opts.ctx.state.set("team0", team0)
+      const player0 = (await opts.ctx.state.get("player0")) ?? {
+        roundsWon: 0,
+        scoreSaberId: "",
+      }
+      const player1 = (await opts.ctx.state.get("player1")) ?? {
+        roundsWon: 0,
+        scoreSaberId: "",
       }
 
-      if (team1.roundsWon > opts.input) {
-        team1.roundsWon = opts.input
-        await opts.ctx.state.set("team1", team1)
+      if (player0.roundsWon > opts.input) {
+        player0.roundsWon = opts.input
+        await opts.ctx.state.set("player0", player0)
       }
 
-      return opts.input
-    }),
-  roundsWon: procedure.input(z.number().min(0).max(1)).query(async (opts) => {
-    // Need to do terenary for typescript to infer the correct type
-    return (
-      (await opts.ctx.state.get(`team${opts.input === 0 ? 0 : 1}`))
-        ?.roundsWon ?? 0
-    )
-  }),
-  setRoundsWon: procedure
-    .input(
-      z.object({
-        index: z.number().min(0).max(1),
-        score: z.number().min(0).max(5),
-      }),
-    )
-    .mutation(async (opts) => {
-      const team = (await opts.ctx.state.get(
-        `team${opts.input.index === 0 ? 0 : 1}`,
-      )) ?? { roundsWon: 0 }
-      team.roundsWon = opts.input.score
-      await opts.ctx.state.set(`team${opts.input.index}`, team)
+      if (player1.roundsWon > opts.input) {
+        player1.roundsWon = opts.input
+        await opts.ctx.state.set("player1", player1)
+      }
+
       return opts.input
     }),
   currentMapPool: procedure.query(async (opts) => {
@@ -122,7 +107,9 @@ export const appRouter = router({
       await opts.ctx.state.set("currentMapPoolState", currentMapPoolState)
       return opts.input
     }),
-  streamSettingsForPlayer: procedure.input(z.string()).query(async (opts) => {
+  streamSettingsForPlayer: procedure.input(z.ostring()).query(async (opts) => {
+    if (!opts.input) return null
+
     const overriddenStreamUrl = (
       await opts.ctx.state.get("overriddenStreamUrls")
     )?.[opts.input]
@@ -171,18 +158,29 @@ export const appRouter = router({
       await opts.ctx.state.set("currentMapPoolBanner", opts.input)
       return opts.input
     }),
-  scoreSaberProfilePicture: procedure.input(z.string()).query(async (opts) => {
+  playerInfo: procedure.input(z.ostring().nullable()).query(async (opts) => {
+    if (!opts.input) return null
+
     const res = await fetch(
       `https://scoresaber.com/api/player/${opts.input}/basic`,
     )
-    const data = (await res.json()) as { profilePicture?: string }
-    return data.profilePicture ?? null
+    if (!res.ok) return null
+
+    const data = (await res.json()) as {
+      profilePicture?: string
+      name?: string
+    }
+    return {
+      name: data.name,
+      profilePicture: data.profilePicture,
+    }
   }),
   beatSaverMapDetails: procedure.input(z.string()).query(async (opts) => {
     const res = await fetch(`https://api.beatsaver.com/maps/hash/${opts.input}`)
     const data = (await res.json()) as BeatSaverMap
     return data
   }),
+  player: playerRouter,
 })
 
 // export type definition of API

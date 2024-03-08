@@ -6,11 +6,9 @@ import {
   DependencyList,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react"
-import TeamAvatars from "@bocchi/bs-canada-overlay/data/teams"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import {
   TeamScoreHeaderQuery,
@@ -20,7 +18,7 @@ import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 
 interface Props {
-  teamIndex: number
+  playerIndex: number
   reverse?: boolean
   hideScore?: boolean
 }
@@ -68,8 +66,13 @@ const useCalculateScore = (
   }
 }
 
-const TeamScoreHeader = (props: Props) => {
-  const { teamIndex, reverse, hideScore } = props
+const PlayerScoreHeader = (props: Props) => {
+  const { playerIndex, reverse, hideScore } = props
+  const [player] = trpc.player.getPlayer.useSuspenseQuery(playerIndex)
+  const [playerInfo] = trpc.playerInfo.useSuspenseQuery(player.scoreSaberId!)
+  const [roundsToWin] = trpc.roundsToWin.useSuspenseQuery(undefined, {
+    refetchInterval: 1000,
+  })
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
     graphql`
@@ -98,11 +101,7 @@ const TeamScoreHeader = (props: Props) => {
       networkCacheConfig: { poll: 500 },
     },
   )
-  const team = teamScoreHeaderQuery?.matchById?.teams?.[teamIndex]
-  const pictureUrl = useMemo(
-    () => TeamAvatars.get(team?.name ?? ""),
-    [team?.name],
-  )
+  const team = teamScoreHeaderQuery?.matchById?.teams?.[playerIndex]
   const { score, accuracy } = useCalculateScore(
     teamScoreHeaderQuery,
     team?.guid,
@@ -139,13 +138,6 @@ const TeamScoreHeader = (props: Props) => {
     immediate: !mounted,
   })
 
-  const { data: roundsWon } = trpc.roundsWon.useQuery(teamIndex, {
-    refetchInterval: 1000,
-  })
-  const { data: roundsToWin } = trpc.roundsToWin.useQuery(undefined, {
-    refetchInterval: 1000,
-  })
-
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -177,16 +169,16 @@ const TeamScoreHeader = (props: Props) => {
         } `}
       >
         <span className="text-xl font-bold">
-          {team?.name ?? `Team ${teamIndex + 1}`}
+          {playerInfo.name ?? `Player ${playerIndex + 1}`}
         </span>
         <img
-          src={pictureUrl ?? "/oculus.png"}
+          src={playerInfo.profilePicture ?? "/oculus.png"}
           className="aspect-square h-20 rounded-md"
         />
       </div>
 
       <RoundsWonDisplay
-        roundsWon={roundsWon ?? 0}
+        roundsWon={player.roundsWon ?? 0}
         roundsToWin={roundsToWin ?? 1}
         reverse={reverse}
       />
@@ -194,4 +186,4 @@ const TeamScoreHeader = (props: Props) => {
   )
 }
 
-export default TeamScoreHeader
+export default PlayerScoreHeader

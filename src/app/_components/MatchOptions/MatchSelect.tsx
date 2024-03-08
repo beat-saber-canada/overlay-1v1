@@ -13,7 +13,7 @@ import { MatchSelectQuery } from "@bocchi/bs-canada-overlay/__generated__/MatchS
 
 const MatchSelect = () => {
   const utils = trpc.useUtils()
-  const { data: currentMatchId, isFetched } = trpc.currentMatchId.useQuery()
+  const [currentMatchId] = trpc.currentMatchId.useSuspenseQuery()
   const { mutate: setCurrentMatchId } = trpc.setCurrentMatchId.useMutation({
     onSuccess: (returnVal) => {
       utils.currentMatchId.setData(undefined, returnVal)
@@ -36,20 +36,20 @@ const MatchSelect = () => {
   )
 
   const onChange = (value: string) => {
+    if (value === "none") setCurrentMatchId(null)
     setCurrentMatchId(value)
   }
-
-  if (!isFetched || !matchSelectQuery) return null
 
   return (
     <div className="flex items-center justify-between">
       <label>Current Match</label>
-      <Select value={currentMatchId ?? undefined} onValueChange={onChange}>
+      <Select value={currentMatchId ?? "none"} onValueChange={onChange}>
         <SelectTrigger className="w-1/2">
-          <SelectValue placeholder="Select a Team" />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {matchSelectQuery.state.matches.map((match: any) => (
+          <SelectItem value="none">None</SelectItem>
+          {matchSelectQuery?.state.matches.map((match: any) => (
             <SelectItem key={match.guid} value={match.guid}>
               {match.teams[0]?.name} vs {match.teams[1]?.name}
             </SelectItem>

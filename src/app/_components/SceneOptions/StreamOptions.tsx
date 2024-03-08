@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@bocchi/bs-canada-overlay/components/ui/card"
 import SceneSelect from "@bocchi/bs-canada-overlay/app/_components/SceneOptions/SceneSelect"
-import StreamSetup from "@bocchi/bs-canada-overlay/app/_components/SceneOptions/StreamSetup"
+import StreamSetup from "./StreamSetup"
 
 const StreamOptions = () => {
   return (

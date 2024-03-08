@@ -1,5 +1,5 @@
 import { inferRouterOutputs } from "@trpc/server"
-import { AppRouter } from "@bocchi/bs-canada-overlay/server/router"
+import { AppRouter } from "@bocchi/bs-canada-overlay/server/routers"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,

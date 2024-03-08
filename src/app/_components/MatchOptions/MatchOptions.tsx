@@ -6,8 +6,9 @@ import {
   CardTitle,
 } from "@bocchi/bs-canada-overlay/components/ui/card"
 import RoundsToWinSlider from "@bocchi/bs-canada-overlay/app/_components/MatchOptions/RoundsToWinSlider"
-import MatchSelect from "@bocchi/bs-canada-overlay/app/_components/MatchOptions/MatchSelect"
 import RoundsWonSlider from "@bocchi/bs-canada-overlay/app/_components/MatchOptions/RoundsWonSlider"
+import MatchSelect from "./MatchSelect"
+import PlayerId from "./PlayerId"
 
 const MatchOptions = () => {
   return (
@@ -17,8 +18,10 @@ const MatchOptions = () => {
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
         <MatchSelect />
-        <RoundsWonSlider index={0} />
-        <RoundsWonSlider index={1} />
+        <PlayerId playerIndex={0} />
+        <PlayerId playerIndex={1} />
+        <RoundsWonSlider playerIndex={0} />
+        <RoundsWonSlider playerIndex={1} />
       </CardContent>
       <CardFooter>
         <RoundsToWinSlider />

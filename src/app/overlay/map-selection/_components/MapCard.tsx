@@ -2,7 +2,7 @@
 
 import DifficultyBadge from "@bocchi/bs-canada-overlay/app/overlay/_components/DifficultyBadge"
 import { inferRouterOutputs } from "@trpc/server"
-import { AppRouter } from "@bocchi/bs-canada-overlay/server/router"
+import { AppRouter } from "@bocchi/bs-canada-overlay/server/routers"
 import { cva } from "class-variance-authority"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 

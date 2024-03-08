@@ -1,7 +1,7 @@
 "use client"
 
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query"
-import { AppRouter } from "@bocchi/bs-canada-overlay/server/router"
+import { AppRouter } from "@bocchi/bs-canada-overlay/server/routers"
 import { useState } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import type { ReactNode } from "react"
@@ -14,7 +14,16 @@ interface Props {
 
 const TRPCProvider = (props: Props) => {
   const { children } = props
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            keepPreviousData: true,
+          },
+        },
+      }),
+  )
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [

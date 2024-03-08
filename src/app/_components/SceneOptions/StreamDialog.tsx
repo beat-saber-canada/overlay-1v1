@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -34,15 +33,17 @@ import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { useState } from "react"
 
 interface Props {
-  userId: string
-  name: string
+  index: number
 }
 
 const StreamDialog = (props: Props) => {
-  const { userId, name } = props
+  const { index } = props
+  const [player] = trpc.player.getPlayer.useSuspenseQuery(index)
+  const [playerInfo] = trpc.playerInfo.useSuspenseQuery(player.scoreSaberId)
   const utils = trpc.useUtils()
-  const { data: streamSettings, isFetched } =
-    trpc.streamSettingsForPlayer.useQuery(userId)
+  const [streamSettings] = trpc.streamSettingsForPlayer.useSuspenseQuery(
+    player.scoreSaberId,
+  )
   const { mutateAsync, isLoading } =
     trpc.setStreamSettingsForPlayer.useMutation({
       onSuccess: async () => {
@@ -64,23 +65,21 @@ const StreamDialog = (props: Props) => {
   }
 
   const onSubmit = async (settings: z.infer<typeof streamSchema>) => {
-    await mutateAsync({ playerId: userId!, settings })
+    await mutateAsync({ playerId: player.scoreSaberId!, settings })
     setIsOpen(false)
   }
 
-  if (!isFetched) {
-    return null
-  }
+  if (!playerInfo) return null
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger className="flex aspect-video w-[160px] items-center justify-center gap-2 overflow-hidden rounded-md p-2 outline outline-2 outline-black">
         {streamSettings?.enableAudio && <Volume2 />}
-        <span className="overflow-hidden text-ellipsis">{name}</span>
+        <span className="overflow-hidden text-ellipsis">{playerInfo.name}</span>
       </DialogTrigger>
       <DialogContent className="p-10">
         <DialogHeader>
-          <DialogTitle>{name}&apos;s Settings</DialogTitle>
+          <DialogTitle>{playerInfo.name}&apos;s Settings</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -130,7 +129,7 @@ const StreamDialog = (props: Props) => {
                           placeholder={
                             // @ts-ignore
                             form.getValues("type") === "rtmp"
-                              ? sanitizeString(name)
+                              ? sanitizeString(playerInfo.name!)
                               : "required"
                           }
                           {...field}

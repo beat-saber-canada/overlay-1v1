@@ -8,6 +8,11 @@ interface TeamState extends JsonObject {
   nameOverride?: string
 }
 
+interface PlayerState extends JsonObject {
+  roundsWon: number
+  scoreSaberId: string
+}
+
 interface CurrentMapPoolState extends JsonObject {
   [key: string]: "picked" | "banned" | "tiebreaker"
 }
@@ -22,8 +27,8 @@ interface State extends KvsLocalStorageSchema {
   roundsToWin: number | null
   currentMapPoolIndex: number | null
   currentMapPoolBanner: string | null
-  team0: TeamState | null
-  team1: TeamState | null
+  player0: PlayerState | null
+  player1: PlayerState | null
   currentMapPoolState: CurrentMapPoolState | null
   overriddenStreamUrls: OverriddenStreamUrls | null
   unmutedPlayerId: string | null
