@@ -6,6 +6,8 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 import { CurrentMapQuery } from "@bocchi/bs-canada-overlay/__generated__/CurrentMapQuery.graphql"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { background } from "../../_components/MapCard"
+import { useMemo } from "react"
+import isDarkColor from "@bocchi/bs-canada-overlay/utils/isDarkColor"
 
 const CurrentMap = () => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
@@ -32,6 +34,16 @@ const CurrentMap = () => {
       enabled: !!currentMapQuery.matchById?.currentMap?.hash,
     },
   )
+  const { data: colorThief } = trpc.colorThief.useQuery(
+    mapDetails?.versions?.[0].coverURL!,
+    {
+      enabled: !!mapDetails?.versions?.[0].coverURL,
+    },
+  )
+  const isDark = useMemo(() => {
+    if (!colorThief) return true
+    return isDarkColor(colorThief[0], colorThief[1], colorThief[2])
+  }, [colorThief])
   const difficulty = currentMapQuery.matchById?.currentMap?.difficulty
 
   if (!mapDetails) return null
@@ -40,6 +52,7 @@ const CurrentMap = () => {
     <div
       className={background({
         className: "h-[140px] w-auto gap-5 transition-all",
+        isDark,
       })}
     >
       <div className="flex flex-row items-center gap-5">

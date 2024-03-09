@@ -4,6 +4,7 @@ import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
 import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
 import { playerRouter } from "./player"
 import { getMapPoolsAsync } from "@bocchi/bs-canada-overlay/data/MapPools"
+import { getColorFromURL } from "color-thief-node"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -183,6 +184,9 @@ export const appRouter = router({
     return data
   }),
   player: playerRouter,
+  colorThief: procedure.input(z.string()).query(async (opts) => {
+    return await getColorFromURL(opts.input)
+  }),
 })
 
 // export type definition of API
