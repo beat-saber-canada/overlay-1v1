@@ -1,7 +1,7 @@
 "use client"
 
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
-import MapCard from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_components/MapCard"
+import MapCard from "@bocchi/bs-canada-overlay/app/overlay/_components/MapCard"
 
 const MapPool = () => {
   const { data: mapPool, isFetched } = trpc.currentMapPool.useQuery(undefined, {

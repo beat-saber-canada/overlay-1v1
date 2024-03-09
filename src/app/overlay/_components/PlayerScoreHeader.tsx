@@ -10,12 +10,12 @@ import {
   useState,
 } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import {
-  TeamScoreHeaderQuery,
-  TeamScoreHeaderQuery$data,
-} from "@bocchi/bs-canada-overlay/__generated__/TeamScoreHeaderQuery.graphql"
 import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
+import {
+  PlayerScoreHeaderQuery,
+  PlayerScoreHeaderQuery$data,
+} from "@bocchi/bs-canada-overlay/__generated__/PlayerScoreHeaderQuery.graphql"
 
 interface Props {
   playerIndex: number
@@ -39,7 +39,7 @@ const useObserveMaxWidth = <T extends HTMLElement>(deps?: DependencyList) => {
 }
 
 const useCalculateScore = (
-  teamScoreHeaderQuery: TeamScoreHeaderQuery$data,
+  teamScoreHeaderQuery: PlayerScoreHeaderQuery$data,
   teamGuid?: string,
 ) => {
   if (!teamScoreHeaderQuery || !teamGuid) {
@@ -74,9 +74,9 @@ const PlayerScoreHeader = (props: Props) => {
     refetchInterval: 1000,
   })
   const { data: currentMatchId } = useCurrentMatchIdQuery()
-  const teamScoreHeaderQuery = useLazyLoadQuery<TeamScoreHeaderQuery>(
+  const teamScoreHeaderQuery = useLazyLoadQuery<PlayerScoreHeaderQuery>(
     graphql`
-      query TeamScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
+      query PlayerScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
         matchById(id: $currentMatchId) @skip(if: $skip) {
           teams {
             name

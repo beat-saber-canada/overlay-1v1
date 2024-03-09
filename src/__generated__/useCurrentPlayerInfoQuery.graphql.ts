@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85a49aa1434a594d67ce57bdf0619e8e>>
+ * @generated SignedSource<<eb920c93b30d4fc1fa5a6b110177d62a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,20 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type RoundsWonSliderQuery$variables = {
+export type useCurrentPlayerInfoQuery$variables = {
   currentMatchId: any;
   skip: boolean;
 };
-export type RoundsWonSliderQuery$data = {
+export type useCurrentPlayerInfoQuery$data = {
   readonly matchById?: {
-    readonly teams: ReadonlyArray<{
-      readonly name: string;
+    readonly players: ReadonlyArray<{
+      readonly userId: string;
     }>;
   } | null | undefined;
 };
-export type RoundsWonSliderQuery = {
-  response: RoundsWonSliderQuery$data;
-  variables: RoundsWonSliderQuery$variables;
+export type useCurrentPlayerInfoQuery = {
+  response: useCurrentPlayerInfoQuery$data;
+  variables: useCurrentPlayerInfoQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -61,16 +61,16 @@ v1 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Team",
+            "concreteType": "User",
             "kind": "LinkedField",
-            "name": "teams",
+            "name": "players",
             "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "name",
+                "name": "userId",
                 "storageKey": null
               }
             ],
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RoundsWonSliderQuery",
+    "name": "useCurrentPlayerInfoQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -96,20 +96,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RoundsWonSliderQuery",
+    "name": "useCurrentPlayerInfoQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "cdb43f4ff49af406b521ea324d58d909",
+    "cacheID": "9133777a82665e727f6b29b66b20bbce",
     "id": null,
     "metadata": {},
-    "name": "RoundsWonSliderQuery",
+    "name": "useCurrentPlayerInfoQuery",
     "operationKind": "query",
-    "text": "query RoundsWonSliderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n    }\n  }\n}\n"
+    "text": "query useCurrentPlayerInfoQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    players {\n      userId\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "890a0bd39007be5f098d2641211f6333";
+(node as any).hash = "fdcbafb7c5a240286c055840f4314632";
 
 export default node;

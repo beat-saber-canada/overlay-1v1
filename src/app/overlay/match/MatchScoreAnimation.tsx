@@ -60,10 +60,7 @@ const MatchScoreAnimation = (props: Props) => {
 
   return (
     <>
-      <animated.div
-        className="grid max-h-fit w-full grid-cols-5"
-        style={{ ...contentSpring }}
-      >
+      <animated.div className="max-h-fit w-full" style={{ ...contentSpring }}>
         {children}
       </animated.div>
       <animated.div

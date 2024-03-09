@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9b554fdf2ca750f1ea9ed36e6ab0a0a>>
+ * @generated SignedSource<<6f7bcc7e571a23fafdbf77895876a994>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type TeamOfThreeQuery$variables = {
+export type PlayerScoreHeaderQuery$variables = {
   currentMatchId: any;
   skip: boolean;
 };
-export type TeamOfThreeQuery$data = {
+export type PlayerScoreHeaderQuery$data = {
   readonly matchById?: {
     readonly players: ReadonlyArray<{
       readonly guid: any;
@@ -21,15 +21,20 @@ export type TeamOfThreeQuery$data = {
         readonly guid: any;
       } | null | undefined;
     }>;
+    readonly scores: ReadonlyArray<{
+      readonly maxScore: number;
+      readonly ownerGuid: any;
+      readonly score: number;
+    }>;
     readonly teams: ReadonlyArray<{
       readonly guid: any;
       readonly name: string;
     }>;
   } | null | undefined;
 };
-export type TeamOfThreeQuery = {
-  response: TeamOfThreeQuery$data;
-  variables: TeamOfThreeQuery$variables;
+export type PlayerScoreHeaderQuery = {
+  response: PlayerScoreHeaderQuery$data;
+  variables: PlayerScoreHeaderQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -94,11 +99,44 @@ v2 = [
           {
             "alias": null,
             "args": null,
+            "concreteType": "Score",
+            "kind": "LinkedField",
+            "name": "scores",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "ownerGuid",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "score",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "maxScore",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "User",
             "kind": "LinkedField",
             "name": "players",
             "plural": true,
             "selections": [
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -110,8 +148,7 @@ v2 = [
                   (v1/*: any*/)
                 ],
                 "storageKey": null
-              },
-              (v1/*: any*/)
+              }
             ],
             "storageKey": null
           }
@@ -126,7 +163,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "TeamOfThreeQuery",
+    "name": "PlayerScoreHeaderQuery",
     "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -135,20 +172,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "TeamOfThreeQuery",
+    "name": "PlayerScoreHeaderQuery",
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "23ee001c24a33e23662af12007a3086d",
+    "cacheID": "a5212ba51879f16b09977fe0c7b332c5",
     "id": null,
     "metadata": {},
-    "name": "TeamOfThreeQuery",
+    "name": "PlayerScoreHeaderQuery",
     "operationKind": "query",
-    "text": "query TeamOfThreeQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n      guid\n    }\n    players {\n      team {\n        guid\n      }\n      guid\n    }\n  }\n}\n"
+    "text": "query PlayerScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n      guid\n    }\n    scores {\n      ownerGuid\n      score\n      maxScore\n    }\n    players {\n      guid\n      team {\n        guid\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "64128712f986113b7d3a19d69c77023d";
+(node as any).hash = "6753bc7b594c970bc429ad259a051abf";
 
 export default node;

@@ -9,7 +9,7 @@ const RootLayout = (props: Props) => {
 
   return (
     <>
-      <div className="p-5">{children}</div>
+      {children}
       <div className="fixed left-0 right-0 top-0 -z-10 h-full w-full">
         <video
           src="/Background.mp4"
