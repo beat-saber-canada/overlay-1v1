@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import ScoreHeader from "@bocchi/bs-canada-overlay/app/overlay/_components/ScoreHeader"
 import { usePathname, useRouter } from "next/navigation"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
+import { useSetAtom } from "jotai"
+import { isBackgroundPlayingAtom } from "../_components/BackgroundVideo"
 
 interface Props {
   children: React.ReactNode
@@ -19,6 +21,7 @@ const MatchScoreAnimation = (props: Props) => {
   })
   const pathname = usePathname()
   const router = useRouter()
+  const setBackgroundPlaying = useSetAtom(isBackgroundPlayingAtom)
 
   const scoreSpring = useSpring({
     scale: isMatchVisible ? "100%" : "150%",
@@ -49,13 +52,18 @@ const MatchScoreAnimation = (props: Props) => {
       setisMatchVisible(true)
       setTimeout(() => {
         setHideScore(false)
+        setBackgroundPlaying(false)
       }, 1000)
     }, 1000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (!!currentScene && pathname !== `/overlay/${currentScene}`)
+    if (!!currentScene && pathname !== `/overlay/${currentScene}`) {
       setisMatchVisible(false)
+      setBackgroundPlaying(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentScene, pathname])
 
   return (

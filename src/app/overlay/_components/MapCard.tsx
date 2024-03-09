@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const background = cva(
-  "transition ease-in-out delay-150 flex w-[700px] flex-row items-center justify-between rounded-md p-5 bg-black outline outline-offset-4 outline-4",
+  "transition ease-in-out delay-150 flex w-[700px] bg-gradient-to-r from-red-800 to-red-900 flex-row items-center justify-between rounded-md p-5 outline outline-offset-4 outline-4",
   {
     variants: {
       state: {
