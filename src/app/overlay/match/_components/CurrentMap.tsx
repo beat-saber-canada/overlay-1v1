@@ -54,6 +54,9 @@ const CurrentMap = () => {
         className: "h-[140px] w-auto gap-5 transition-all",
         isDark,
       })}
+      style={{
+        background: `rgb(${colorThief?.[0]}, ${colorThief?.[1]}, ${colorThief?.[2]})`,
+      }}
     >
       <div className="flex flex-row items-center gap-5">
         <img
@@ -61,23 +64,19 @@ const CurrentMap = () => {
           src={mapDetails?.versions?.[0].coverURL}
         />
         <div className="flex flex-col overflow-hidden">
-          <span className="line-clamp-1 overflow-ellipsis text-2xl text-white">
+          <span className="line-clamp-1 overflow-ellipsis text-2xl ">
             {mapDetails?.metadata.songName} -{" "}
             {mapDetails?.metadata.songAuthorName}
           </span>
-          <span className="line-clamp-1 overflow-ellipsis text-sm text-white">
+          <span className="line-clamp-1 overflow-ellipsis text-sm ">
             Mapped by {mapDetails?.metadata.levelAuthorName}
           </span>
         </div>
       </div>
       <div className="flex flex-col items-end gap-1">
         {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
-        <span className="text-md font-semibold text-white">
-          {mapDetails?.id}
-        </span>
-        <span className="text-sm text-white">
-          {mapDetails?.metadata.bpm} BPM
-        </span>
+        <span className="text-md font-semibold ">{mapDetails?.id}</span>
+        <span className="text-sm ">{mapDetails?.metadata.bpm} BPM</span>
       </div>
     </div>
   )
