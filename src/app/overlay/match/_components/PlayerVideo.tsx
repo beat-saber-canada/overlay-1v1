@@ -6,7 +6,7 @@ import ReactPlayer from "react-player"
 import { useEffect, useMemo, useState } from "react"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import sanitizeString from "@bocchi/bs-canada-overlay/utils/sanitizeString"
-import useCurrentPlayerInfoQuery from "../../_hooks/useCurrentPlayerInfoQuery"
+import useCurrentPlayerInfoQuery from "../../../_hooks/useCurrentPlayerInfoQuery"
 
 interface Props {
   playerIndex: number

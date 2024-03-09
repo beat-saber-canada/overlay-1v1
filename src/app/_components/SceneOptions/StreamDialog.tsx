@@ -31,6 +31,7 @@ import { Button } from "@bocchi/bs-canada-overlay/components/ui/button"
 import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { useState } from "react"
+import useCurrentPlayerInfoQuery from "../../_hooks/useCurrentPlayerInfoQuery"
 
 interface Props {
   index: number
@@ -38,12 +39,10 @@ interface Props {
 
 const StreamDialog = (props: Props) => {
   const { index } = props
-  const [player] = trpc.player.getPlayer.useSuspenseQuery(index)
-  const [playerInfo] = trpc.playerInfo.useSuspenseQuery(player.scoreSaberId)
+  const { data: playerInfo, playerId } = useCurrentPlayerInfoQuery(index)
   const utils = trpc.useUtils()
-  const [streamSettings] = trpc.streamSettingsForPlayer.useSuspenseQuery(
-    player.scoreSaberId,
-  )
+  const [streamSettings] =
+    trpc.streamSettingsForPlayer.useSuspenseQuery(playerId)
   const { mutateAsync, isLoading } =
     trpc.setStreamSettingsForPlayer.useMutation({
       onSuccess: async () => {
@@ -69,13 +68,15 @@ const StreamDialog = (props: Props) => {
     setIsOpen(false)
   }
 
-  if (!playerInfo) return null
+  if (!streamSettings || !playerInfo) return null
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger className="flex aspect-video w-[160px] items-center justify-center gap-2 overflow-hidden rounded-md p-2 outline outline-2 outline-black">
         {streamSettings?.enableAudio && <Volume2 />}
-        <span className="overflow-hidden text-ellipsis">{playerInfo.name}</span>
+        <span className="overflow-hidden text-ellipsis">
+          {playerInfo?.name}
+        </span>
       </DialogTrigger>
       <DialogContent className="p-10">
         <DialogHeader>

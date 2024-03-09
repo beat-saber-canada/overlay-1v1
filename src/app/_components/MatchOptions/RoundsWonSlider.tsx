@@ -3,6 +3,7 @@
 import { Slider } from "@bocchi/bs-canada-overlay/components/ui/slider"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { useEffect, useState } from "react"
+import useCurrentPlayerInfoQuery from "../../_hooks/useCurrentPlayerInfoQuery"
 
 interface Props {
   playerIndex: number
@@ -14,14 +15,15 @@ const RoundsWon = (props: Props) => {
   const [localValue, setLocalValue] = useState([1])
   const [roundsToWin] = trpc.roundsToWin.useSuspenseQuery()
   const [player] = trpc.player.getPlayer.useSuspenseQuery(index)
-  const [playerInfo] = trpc.playerInfo.useSuspenseQuery(player.scoreSaberId)
-  const { roundsWon, scoreSaberId } = player
+  const { data: playerInfo, playerId: scoreSaberId } =
+    useCurrentPlayerInfoQuery(index)
+  const { roundsWon } = player
   const { mutateAsync: setPlayerAsync } = trpc.player.setPlayer.useMutation()
 
   useEffect(() => {
-    if (player.roundsWon === undefined) return
-    setLocalValue([player.roundsWon])
-  }, [player.roundsWon])
+    if (roundsWon === undefined) return
+    setLocalValue([roundsWon])
+  }, [roundsWon])
 
   const onSliderChange = async (value: number[]) => {
     if (value[0] === roundsWon) return

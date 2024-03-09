@@ -10,12 +10,13 @@ import {
   useState,
 } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
-import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
+import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/_hooks/useCurrentMatchIdQuery"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import {
   PlayerScoreHeaderQuery,
   PlayerScoreHeaderQuery$data,
 } from "@bocchi/bs-canada-overlay/__generated__/PlayerScoreHeaderQuery.graphql"
+import useCurrentPlayerInfoQuery from "../../_hooks/useCurrentPlayerInfoQuery"
 
 interface Props {
   playerIndex: number
@@ -63,8 +64,8 @@ const useCalculateScore = (
 
 const PlayerScoreHeader = (props: Props) => {
   const { playerIndex, reverse, hideScore } = props
-  const [player] = trpc.player.getPlayer.useSuspenseQuery(playerIndex)
-  const [playerInfo] = trpc.playerInfo.useSuspenseQuery(player.scoreSaberId!)
+  const { data: player } = trpc.player.getPlayer.useQuery(playerIndex)
+  const { data: playerInfo } = useCurrentPlayerInfoQuery(playerIndex)
   const [roundsToWin] = trpc.roundsToWin.useSuspenseQuery(undefined, {
     refetchInterval: 1000,
   })
@@ -168,7 +169,7 @@ const PlayerScoreHeader = (props: Props) => {
       </div>
 
       <RoundsWonDisplay
-        roundsWon={player.roundsWon ?? 0}
+        roundsWon={player?.roundsWon ?? 0}
         roundsToWin={roundsToWin ?? 1}
         reverse={reverse}
       />

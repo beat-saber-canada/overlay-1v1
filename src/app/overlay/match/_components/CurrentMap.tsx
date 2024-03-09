@@ -1,7 +1,7 @@
 "use client"
 
 import DifficultyBadge from "@bocchi/bs-canada-overlay/app/overlay/_components/DifficultyBadge"
-import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/overlay/_hooks/useCurrentMatchIdQuery"
+import useCurrentMatchIdQuery from "@bocchi/bs-canada-overlay/app/_hooks/useCurrentMatchIdQuery"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { CurrentMapQuery } from "@bocchi/bs-canada-overlay/__generated__/CurrentMapQuery.graphql"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
