@@ -6,7 +6,6 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 import { CurrentMapQuery } from "@bocchi/bs-canada-overlay/__generated__/CurrentMapQuery.graphql"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { background } from "../../_components/MapCard"
-import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
 
 const CurrentMap = () => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
@@ -28,9 +27,9 @@ const CurrentMap = () => {
     },
   )
   const { data: mapDetails } = trpc.beatSaverMapDetails.useQuery(
-    "A8A1C4368D569C5D12F69445871FBCBA20516471",
+    currentMapQuery.matchById?.currentMap?.hash!,
     {
-      enabled: true,
+      enabled: !!currentMapQuery.matchById?.currentMap?.hash,
     },
   )
   const difficulty = currentMapQuery.matchById?.currentMap?.difficulty
@@ -53,7 +52,7 @@ const CurrentMap = () => {
         </div>
       </div>
       <div className="flex flex-col items-end gap-1">
-        <DifficultyBadge difficulty={Difficulty.ExpertPlus} />
+        {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
         <span className="text-md font-semibold text-white">
           {mapDetails?.id}
         </span>
