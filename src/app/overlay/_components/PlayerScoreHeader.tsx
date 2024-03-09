@@ -150,7 +150,7 @@ const PlayerScoreHeader = (props: Props) => {
         <span className="text-xl font-semibold">
           {tweenedScore.accuracy.toFixed(2)}%
         </span>
-        <span className="text-sm">{tweenedScore.combo.toFixed(0)}</span>
+        <span className="text-sm">{tweenedScore.combo.toFixed(0)}x</span>
       </animated.div>
 
       <div

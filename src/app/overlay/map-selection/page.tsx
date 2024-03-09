@@ -4,7 +4,9 @@ import MapPool from "@bocchi/bs-canada-overlay/app/overlay/map-selection/_compon
 const MapSelectionPage = () => {
   return (
     <MapSelectionScoreAnimation>
-      <MapPool />
+      <div className="p-5">
+        <MapPool />
+      </div>
     </MapSelectionScoreAnimation>
   )
 }
