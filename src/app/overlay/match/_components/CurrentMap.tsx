@@ -7,7 +7,8 @@ import { CurrentMapQuery } from "@bocchi/bs-canada-overlay/__generated__/Current
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { background } from "../../_components/MapCard"
 import { useMemo } from "react"
-import isDarkColor from "@bocchi/bs-canada-overlay/utils/isDarkColor"
+import useColorThief from "../../_hooks/useColorThief"
+import cn from "@bocchi/bs-canada-overlay/utils/cn"
 
 const CurrentMap = () => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
@@ -34,16 +35,9 @@ const CurrentMap = () => {
       enabled: !!currentMapQuery.matchById?.currentMap?.hash,
     },
   )
-  const { data: colorThief } = trpc.colorThief.useQuery(
-    mapDetails?.versions?.[0].coverURL!,
-    {
-      enabled: !!mapDetails?.versions?.[0].coverURL,
-    },
+  const { isFirstDark, isSecondDark, backgroundString } = useColorThief(
+    mapDetails?.versions?.[0].coverURL,
   )
-  const isDark = useMemo(() => {
-    if (!colorThief) return true
-    return isDarkColor(colorThief[0], colorThief[1], colorThief[2])
-  }, [colorThief])
   const difficulty = currentMapQuery.matchById?.currentMap?.difficulty
 
   if (!mapDetails) return null
@@ -52,10 +46,10 @@ const CurrentMap = () => {
     <div
       className={background({
         className: "h-[140px] w-auto gap-5 transition-all",
-        isDark,
+        isDark: isFirstDark,
       })}
       style={{
-        background: `rgb(${colorThief?.[0]}, ${colorThief?.[1]}, ${colorThief?.[2]})`,
+        background: backgroundString,
       }}
     >
       <div className="flex flex-row items-center gap-5">
@@ -63,7 +57,7 @@ const CurrentMap = () => {
           className="aspect-square h-24 rounded-md"
           src={mapDetails?.versions?.[0].coverURL}
         />
-        <div className="flex flex-col overflow-hidden">
+        <div className="flex min-w-[420px] max-w-[1200px] flex-col overflow-hidden">
           <span className="line-clamp-1 overflow-ellipsis text-2xl ">
             {mapDetails?.metadata.songName} -{" "}
             {mapDetails?.metadata.songAuthorName}
@@ -75,8 +69,19 @@ const CurrentMap = () => {
       </div>
       <div className="flex flex-col items-end gap-1">
         {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
-        <span className="text-md font-semibold ">{mapDetails?.id}</span>
-        <span className="text-sm ">{mapDetails?.metadata.bpm} BPM</span>
+        <span
+          className={cn(
+            "text-md font-semibold",
+            isSecondDark ? "text-white" : "text-black",
+          )}
+        >
+          {mapDetails?.id}
+        </span>
+        <span
+          className={cn("text-sm", isSecondDark ? "text-white" : "text-black")}
+        >
+          {mapDetails?.metadata.bpm} BPM
+        </span>
       </div>
     </div>
   )

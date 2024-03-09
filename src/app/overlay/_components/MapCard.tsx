@@ -5,8 +5,8 @@ import { inferRouterOutputs } from "@trpc/server"
 import { AppRouter } from "@bocchi/bs-canada-overlay/server/routers"
 import { cva } from "class-variance-authority"
 import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
-import { useMemo } from "react"
-import isDarkColor from "@bocchi/bs-canada-overlay/utils/isDarkColor"
+import cn from "@bocchi/bs-canada-overlay/utils/cn"
+import useColorThief from "../_hooks/useColorThief"
 
 interface Props {
   map: inferRouterOutputs<AppRouter>["currentMapPool"]["maps"][0]
@@ -33,6 +33,9 @@ export const background = cva(
   },
 )
 
+const rgbString = (rgb?: number[]) =>
+  `rgb(${rgb?.[0]}, ${rgb?.[1]}, ${rgb?.[2]})`
+
 const MapCard = (props: Props) => {
   const { map } = props
   const { data: mapPoolState } = trpc.mapPoolStateForMap.useQuery(
@@ -41,23 +44,17 @@ const MapCard = (props: Props) => {
       refetchInterval: 1000,
     },
   )
-  const { data: colorThief } = trpc.colorThief.useQuery(
+  const { isFirstDark, isSecondDark, backgroundString } = useColorThief(
     map.mapDetails?.versions?.[0].coverURL,
-    {
-      enabled: !!map.mapDetails?.versions?.[0].coverURL,
-    },
   )
-  const isDark = useMemo(() => {
-    if (!colorThief) return true
-    return isDarkColor(colorThief[0], colorThief[1], colorThief[2])
-  }, [colorThief])
 
   return (
     <div
-      className={background({ state: mapPoolState ?? undefined, isDark })}
-      style={{
-        background: `rgb(${colorThief?.[0]}, ${colorThief?.[1]}, ${colorThief?.[2]})`,
-      }}
+      className={background({
+        state: mapPoolState ?? undefined,
+        isDark: isFirstDark,
+      })}
+      style={{ background: backgroundString }}
     >
       <div className="flex flex-row items-center gap-5">
         <img
@@ -76,8 +73,19 @@ const MapCard = (props: Props) => {
       </div>
       <div className="flex flex-col items-end gap-1">
         <DifficultyBadge difficulty={map.difficulty} />
-        <span className="text-md font-semibold ">{map.mapDetails.id}</span>
-        <span className="text-sm">{map.mapDetails.metadata.bpm} BPM</span>
+        <span
+          className={cn(
+            "text-md font-semibold",
+            isSecondDark ? "text-white" : "text-black",
+          )}
+        >
+          {map.mapDetails.id}
+        </span>
+        <span
+          className={cn("text-sm", isSecondDark ? "text-white" : "text-black")}
+        >
+          {map.mapDetails.metadata.bpm} BPM
+        </span>
       </div>
     </div>
   )

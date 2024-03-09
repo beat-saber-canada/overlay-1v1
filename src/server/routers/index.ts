@@ -4,7 +4,7 @@ import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
 import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
 import { playerRouter } from "./player"
 import { getMapPoolsAsync } from "@bocchi/bs-canada-overlay/data/MapPools"
-import { getColorFromURL } from "color-thief-node"
+import { getColorFromURL, getPaletteFromURL } from "color-thief-node"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -185,7 +185,7 @@ export const appRouter = router({
   }),
   player: playerRouter,
   colorThief: procedure.input(z.string()).query(async (opts) => {
-    return await getColorFromURL(opts.input)
+    return await getPaletteFromURL(opts.input)
   }),
 })
 
