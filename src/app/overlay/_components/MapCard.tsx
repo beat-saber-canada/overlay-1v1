@@ -10,7 +10,7 @@ interface Props {
   map: inferRouterOutputs<AppRouter>["currentMapPool"]["maps"][0]
 }
 
-const background = cva(
+export const background = cva(
   "transition ease-in-out delay-150 flex w-[700px] flex-row items-center justify-between rounded-md p-5 bg-black outline outline-offset-4 outline-4",
   {
     variants: {

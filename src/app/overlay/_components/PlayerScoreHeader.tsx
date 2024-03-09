@@ -169,10 +169,10 @@ const PlayerScoreHeader = (props: Props) => {
         } `}
       >
         <span className="text-xl font-bold">
-          {playerInfo.name ?? `Player ${playerIndex + 1}`}
+          {playerInfo?.name ?? `Player ${playerIndex + 1}`}
         </span>
         <img
-          src={playerInfo.profilePicture ?? "/oculus.png"}
+          src={playerInfo?.profilePicture ?? "/oculus.png"}
           className="aspect-square h-20 rounded-md"
         />
       </div>

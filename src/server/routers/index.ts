@@ -1,9 +1,9 @@
 import { z } from "zod"
 import { procedure, router } from "@bocchi/bs-canada-overlay/server/trpc"
 import BeatSaverMap from "@bocchi/bs-canada-overlay/data/BeatSaverMap"
-import MapPools from "@bocchi/bs-canada-overlay/data/MapPools"
 import streamSchema from "@bocchi/bs-canada-overlay/data/streamSchema"
 import { playerRouter } from "./player"
+import { getMapPoolsAsync } from "@bocchi/bs-canada-overlay/data/MapPools"
 
 export const appRouter = router({
   switchScenes: procedure
@@ -56,17 +56,18 @@ export const appRouter = router({
   currentMapPool: procedure.query(async (opts) => {
     const currentMapPoolIndex =
       (await opts.ctx.state.get("currentMapPoolIndex")) ?? 0
-    const mapPool = MapPools[currentMapPoolIndex]
-    const mapKeys = mapPool.maps.map((map) => map.key)
+    const mapPools = await getMapPoolsAsync()
+    const mapPool = mapPools[currentMapPoolIndex]
+    const mapHashes = mapPool.maps.map((map) => map.hash)
     const mapDetailsResponse = await fetch(
-      `https://api.beatsaver.com/maps/ids/${mapKeys.join("%2C")}`,
+      `https://api.beatsaver.com/maps/hash/${mapHashes.join("%2C")}`,
     )
     const mapDetails = (await mapDetailsResponse.json()) as {
       [key: string]: BeatSaverMap
     }
     const mapDetailsMerged = mapPool.maps.map((map) => ({
       difficulty: map.difficulty,
-      mapDetails: mapDetails[map.key],
+      mapDetails: mapDetails[map.hash.toLowerCase()],
     }))
     return {
       ...mapPool,
@@ -74,7 +75,8 @@ export const appRouter = router({
     }
   }),
   mapPoolNames: procedure.query(async (opts) => {
-    return MapPools.map((pool) => pool.name)
+    const mapPools = await getMapPoolsAsync()
+    return mapPools.map((pool) => pool.name)
   }),
   currentMapPoolIndex: procedure.query(async (opts) => {
     return (await opts.ctx.state.get("currentMapPoolIndex")) ?? 0

@@ -46,7 +46,7 @@ const PlayerVideo = (props: Props) => {
 
   return (
     <div className="w-1/2 overflow-hidden">
-      <div className="aspect-video h-[500px] -translate-x-[100px]">
+      <div className="aspect-video h-[800px] -translate-x-[200px]">
         <ReactPlayer
           url={streamUrl}
           muted={!(streamSettings?.enableAudio ?? false)}
