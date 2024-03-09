@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f7bcc7e571a23fafdbf77895876a994>>
+ * @generated SignedSource<<5d36e3dc5cdd3f8e51756ade3b1f0784>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,18 +17,12 @@ export type PlayerScoreHeaderQuery$data = {
   readonly matchById?: {
     readonly players: ReadonlyArray<{
       readonly guid: any;
-      readonly team: {
-        readonly guid: any;
-      } | null | undefined;
     }>;
     readonly scores: ReadonlyArray<{
+      readonly combo: number;
       readonly maxScore: number;
       readonly ownerGuid: any;
       readonly score: number;
-    }>;
-    readonly teams: ReadonlyArray<{
-      readonly guid: any;
-      readonly name: string;
     }>;
   } | null | undefined;
 };
@@ -50,14 +44,7 @@ var v0 = [
     "name": "skip"
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "guid",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "condition": "skip",
     "kind": "Condition",
@@ -77,25 +64,6 @@ v2 = [
         "name": "matchById",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Team",
-            "kind": "LinkedField",
-            "name": "teams",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -124,6 +92,13 @@ v2 = [
                 "kind": "ScalarField",
                 "name": "maxScore",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "combo",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -136,17 +111,11 @@ v2 = [
             "name": "players",
             "plural": true,
             "selections": [
-              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Team",
-                "kind": "LinkedField",
-                "name": "team",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/)
-                ],
+                "kind": "ScalarField",
+                "name": "guid",
                 "storageKey": null
               }
             ],
@@ -164,7 +133,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "PlayerScoreHeaderQuery",
-    "selections": (v2/*: any*/),
+    "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -173,19 +142,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PlayerScoreHeaderQuery",
-    "selections": (v2/*: any*/)
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a5212ba51879f16b09977fe0c7b332c5",
+    "cacheID": "7147f7ede25294c9fed8b8dfae424cbf",
     "id": null,
     "metadata": {},
     "name": "PlayerScoreHeaderQuery",
     "operationKind": "query",
-    "text": "query PlayerScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    teams {\n      name\n      guid\n    }\n    scores {\n      ownerGuid\n      score\n      maxScore\n    }\n    players {\n      guid\n      team {\n        guid\n      }\n    }\n  }\n}\n"
+    "text": "query PlayerScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    scores {\n      ownerGuid\n      score\n      maxScore\n      combo\n    }\n    players {\n      guid\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6753bc7b594c970bc429ad259a051abf";
+(node as any).hash = "bf80153fcfbed84fce518dbd49149c70";
 
 export default node;

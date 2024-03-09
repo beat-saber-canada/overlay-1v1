@@ -39,29 +39,24 @@ const useObserveMaxWidth = <T extends HTMLElement>(deps?: DependencyList) => {
 }
 
 const useCalculateScore = (
-  teamScoreHeaderQuery: PlayerScoreHeaderQuery$data,
-  teamGuid?: string,
+  playerScoreHeaderQuery: PlayerScoreHeaderQuery$data,
+  playerGuid?: string,
 ) => {
-  if (!teamScoreHeaderQuery || !teamGuid) {
+  if (!playerScoreHeaderQuery || !playerGuid) {
     return {
-      score: 0,
+      combo: 0,
       accuracy: 0,
     }
   }
 
-  const playerGuidsFromTeam = teamScoreHeaderQuery?.matchById?.players
-    .filter((player) => player.team?.guid === teamGuid)
-    .map((player) => player.guid) as string[]
-  const scores = teamScoreHeaderQuery?.matchById?.scores.filter((score) =>
-    playerGuidsFromTeam.includes(score.ownerGuid),
-  )
-  const score =
-    scores?.reduce((currentScore, score) => currentScore + score.score, 0) ?? 0
-  const accuracy =
-    (score / ((scores?.[0]?.maxScore ?? 1) * (scores?.length ?? 1))) * 100
+  const score = playerScoreHeaderQuery?.matchById?.scores.filter(
+    (score) => score.ownerGuid === playerGuid,
+  )?.[0]
+  const combo = score?.combo ?? 0
+  const accuracy = (score?.score ?? 0) / (score?.maxScore ?? 1)
 
   return {
-    score,
+    combo,
     accuracy,
   }
 }
@@ -74,24 +69,18 @@ const PlayerScoreHeader = (props: Props) => {
     refetchInterval: 1000,
   })
   const { data: currentMatchId } = useCurrentMatchIdQuery()
-  const teamScoreHeaderQuery = useLazyLoadQuery<PlayerScoreHeaderQuery>(
+  const playerScoreHeaderQuery = useLazyLoadQuery<PlayerScoreHeaderQuery>(
     graphql`
       query PlayerScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
         matchById(id: $currentMatchId) @skip(if: $skip) {
-          teams {
-            name
-            guid
-          }
           scores {
             ownerGuid
             score
             maxScore
+            combo
           }
           players {
             guid
-            team {
-              guid
-            }
           }
         }
       }
@@ -101,23 +90,24 @@ const PlayerScoreHeader = (props: Props) => {
       networkCacheConfig: { poll: 500 },
     },
   )
-  const team = teamScoreHeaderQuery?.matchById?.teams?.[playerIndex]
-  const { score, accuracy } = useCalculateScore(
-    teamScoreHeaderQuery,
-    team?.guid,
+  const playerGuid =
+    playerScoreHeaderQuery?.matchById?.players?.[playerIndex].guid
+  const { combo, accuracy } = useCalculateScore(
+    playerScoreHeaderQuery,
+    playerGuid,
   )
 
   const [tweenedScore, setTweenedScore] = useState({
-    score: 0,
+    combo: 0,
     accuracy: 0,
   })
   useSpring({
-    score,
+    combo,
     accuracy,
 
     onChange: (result) => {
       setTweenedScore({
-        score: result.value.score,
+        combo: result.value.combo,
         accuracy: result.value.accuracy,
       })
     },
@@ -128,7 +118,7 @@ const PlayerScoreHeader = (props: Props) => {
   })
 
   const { width, ref: scoreRef } = useObserveMaxWidth<HTMLDivElement>([
-    score,
+    combo,
     accuracy,
     hideScore,
   ])
@@ -160,7 +150,7 @@ const PlayerScoreHeader = (props: Props) => {
         <span className="text-xl font-semibold">
           {tweenedScore.accuracy.toFixed(2)}%
         </span>
-        <span className="text-sm">{tweenedScore.score.toFixed(0)}</span>
+        <span className="text-sm">{tweenedScore.combo.toFixed(0)}</span>
       </animated.div>
 
       <div

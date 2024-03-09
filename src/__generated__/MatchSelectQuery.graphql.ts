@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8752ac909fcc6620c37e8c6d85cc93ab>>
+ * @generated SignedSource<<e9844118b9e0af6c7be0689f519d8993>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type MatchSelectQuery$data = {
   readonly state: {
     readonly matches: ReadonlyArray<{
       readonly guid: any;
-      readonly teams: ReadonlyArray<{
+      readonly players: ReadonlyArray<{
         readonly name: string;
       }>;
     }>;
@@ -53,9 +53,9 @@ var v0 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Team",
+            "concreteType": "User",
             "kind": "LinkedField",
-            "name": "teams",
+            "name": "players",
             "plural": true,
             "selections": [
               {
@@ -93,16 +93,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "012dda42b5c4f993448a4ceb2178cda9",
+    "cacheID": "a3eb837b9146a1548df524612b8ddb4e",
     "id": null,
     "metadata": {},
     "name": "MatchSelectQuery",
     "operationKind": "query",
-    "text": "query MatchSelectQuery {\n  state {\n    matches {\n      guid\n      teams {\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query MatchSelectQuery {\n  state {\n    matches {\n      guid\n      players {\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "760d21e44bc31b60285d44a813828e0b";
+(node as any).hash = "424166040666ecb92a4a4726541a5a2a";
 
 export default node;
