@@ -14,7 +14,7 @@ const CurrentMap = () => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const currentMapQuery = useLazyLoadQuery<CurrentMapQuery>(
     graphql`
-      query CurrentMapQuery($currentMatchId: Uuid!, $skip: Boolean!) {
+      query CurrentMapQuery($currentMatchId: UUID!, $skip: Boolean!) {
         matchById(id: $currentMatchId) @skip(if: $skip) {
           currentMap {
             name

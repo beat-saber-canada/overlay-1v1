@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9844118b9e0af6c7be0689f519d8993>>
+ * @generated SignedSource<<30d2bf85bd2ca1ea4bd155d8e0d9abf8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ var v0 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "GQLTAState",
+    "concreteType": "Gqltastate",
     "kind": "LinkedField",
     "name": "state",
     "plural": false,

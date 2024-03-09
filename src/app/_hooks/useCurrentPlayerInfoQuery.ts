@@ -8,7 +8,7 @@ const useCurrentPlayerInfoQuery = (playerIndex: number) => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const playerIndexQuery = useLazyLoadQuery<useCurrentPlayerInfoQuery>(
     graphql`
-      query useCurrentPlayerInfoQuery($currentMatchId: Uuid!, $skip: Boolean!) {
+      query useCurrentPlayerInfoQuery($currentMatchId: UUID!, $skip: Boolean!) {
         matchById(id: $currentMatchId) @skip(if: $skip) {
           players {
             userId

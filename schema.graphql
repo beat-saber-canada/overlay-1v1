@@ -1,5 +1,14 @@
-type Mutation {
-  updatePage(page: InputPage!): GQLOverState!
+enum DownloadState {
+  NONE
+  DOWNLOADING
+  DOWNLOADED
+  DOWNLOAD_ERROR
+}
+
+type Gqltastate {
+  coordinators: [User!]!
+  players: [User!]!
+  matches: [Match!]!
 }
 
 type Map {
@@ -9,29 +18,27 @@ type Map {
   modifiers: [String!]!
 }
 
-type Page {
-  data: [PageData!]!
-  path: String!
-  pathName: String!
+type Match {
+  guid: UUID!
+  players: [User!]!
+  teams: [Team!]!
+  coordinators: [User!]!
+  currentMap: Map
+  scores: [Score!]!
 }
 
-type PageData {
-  key: String!
-  value: String!
-}
-
-type GQLOverState {
-  page: Page!
+enum PlayState {
+  WAITING
+  IN_GAME
 }
 
 type Query {
-  state: GQLTAState!
-  matchById(id: Uuid!): Match
-  page: GQLOverState!
+  state: Gqltastate!
+  matchById(id: UUID!): Match
 }
 
 type Score {
-  ownerGuid: Uuid!
+  ownerGuid: UUID!
   score: Int!
   scoreWithModifiers: Int!
   maxScore: Int!
@@ -53,48 +60,23 @@ type Score {
   rightHandBadCut: Int!
 }
 
-enum DownloadState {
-  NONE
-  DOWNLOADING
-  DOWNLOADED
-  DOWNLOAD_ERROR
-}
-
-type GQLTAState {
-  coordinators: [User!]!
-  players: [User!]!
-  matches: [Match!]!
-}
-
-input InputPageData {
-  key: String!
-  value: String!
-}
-
 type Team {
-  guid: Uuid!
+  guid: UUID!
   name: String!
 }
 
-type Match {
-  guid: Uuid!
-  players: [User!]!
-  teams: [Team!]!
-  coordinators: [User!]!
-  currentMap: Map
-  scores: [Score!]!
-}
-
-enum PlayState {
-  WAITING
-  IN_GAME
-}
-
-# Uuid
-scalar Uuid
+# A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+# Strings within GraphQL. UUIDs are used to assign unique identifiers to
+# entities without requiring a central allocating authority.
+#
+# # References
+#
+# * [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+# * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+scalar UUID
 
 type User {
-  guid: Uuid!
+  guid: UUID!
   name: String!
   userId: String!
   playState: PlayState!
@@ -103,10 +85,4 @@ type User {
   modList: [String!]!
   streamDelayMs: Int!
   streamSyncStartMs: Int!
-}
-
-input InputPage {
-  data: [InputPageData!]!
-  path: String!
-  pathName: String!
 }

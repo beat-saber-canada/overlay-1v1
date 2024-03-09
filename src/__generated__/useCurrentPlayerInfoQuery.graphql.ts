@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb920c93b30d4fc1fa5a6b110177d62a>>
+ * @generated SignedSource<<b2c21d8e26f3e946297f36f3b3458f48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,16 +100,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "9133777a82665e727f6b29b66b20bbce",
+    "cacheID": "6b1ba4f1188f9424109803fb2bd5c96f",
     "id": null,
     "metadata": {},
     "name": "useCurrentPlayerInfoQuery",
     "operationKind": "query",
-    "text": "query useCurrentPlayerInfoQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    players {\n      userId\n    }\n  }\n}\n"
+    "text": "query useCurrentPlayerInfoQuery(\n  $currentMatchId: UUID!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    players {\n      userId\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fdcbafb7c5a240286c055840f4314632";
+(node as any).hash = "b1ac19725df230d796932b9a8febc301";
 
 export default node;

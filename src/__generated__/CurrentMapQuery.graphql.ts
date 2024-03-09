@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1772dfb569a4737170944bd61fd6088a>>
+ * @generated SignedSource<<bb9be64554623e7b48c3c46c890296ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -116,16 +116,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "ada0d92e58545b09740c3a1e1dd223c9",
+    "cacheID": "e6dcc7ef92bbabc81e29633b4187a2c4",
     "id": null,
     "metadata": {},
     "name": "CurrentMapQuery",
     "operationKind": "query",
-    "text": "query CurrentMapQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    currentMap {\n      name\n      difficulty\n      hash\n    }\n  }\n}\n"
+    "text": "query CurrentMapQuery(\n  $currentMatchId: UUID!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    currentMap {\n      name\n      difficulty\n      hash\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f5aaeae6185f1ed889d7b43bfb5e02ea";
+(node as any).hash = "5524eadf8122e33c9137e539d986fc96";
 
 export default node;

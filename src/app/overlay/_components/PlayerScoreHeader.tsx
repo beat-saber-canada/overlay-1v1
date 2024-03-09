@@ -72,7 +72,7 @@ const PlayerScoreHeader = (props: Props) => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
   const playerScoreHeaderQuery = useLazyLoadQuery<PlayerScoreHeaderQuery>(
     graphql`
-      query PlayerScoreHeaderQuery($currentMatchId: Uuid!, $skip: Boolean!) {
+      query PlayerScoreHeaderQuery($currentMatchId: UUID!, $skip: Boolean!) {
         matchById(id: $currentMatchId) @skip(if: $skip) {
           scores {
             ownerGuid

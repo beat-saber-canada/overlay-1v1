@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d36e3dc5cdd3f8e51756ade3b1f0784>>
+ * @generated SignedSource<<78d9117fdcca104fed6eab55c56cbc44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -145,16 +145,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "7147f7ede25294c9fed8b8dfae424cbf",
+    "cacheID": "3341a1da9a84518900295244154b55b6",
     "id": null,
     "metadata": {},
     "name": "PlayerScoreHeaderQuery",
     "operationKind": "query",
-    "text": "query PlayerScoreHeaderQuery(\n  $currentMatchId: Uuid!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    scores {\n      ownerGuid\n      score\n      maxScore\n      combo\n    }\n    players {\n      guid\n    }\n  }\n}\n"
+    "text": "query PlayerScoreHeaderQuery(\n  $currentMatchId: UUID!\n  $skip: Boolean!\n) {\n  matchById(id: $currentMatchId) @skip(if: $skip) {\n    scores {\n      ownerGuid\n      score\n      maxScore\n      combo\n    }\n    players {\n      guid\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bf80153fcfbed84fce518dbd49149c70";
+(node as any).hash = "236e71c0b25d390c6910f024b6e49268";
 
 export default node;
