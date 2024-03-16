@@ -32,6 +32,7 @@ interface State extends KvsLocalStorageSchema {
   currentMapPoolState: CurrentMapPoolState | null
   overriddenStreamUrls: OverriddenStreamUrls | null
   unmutedPlayerId: string | null
+  isReplay: boolean
 }
 
 const createContext = async () => ({

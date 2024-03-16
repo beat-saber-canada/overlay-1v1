@@ -72,7 +72,7 @@ export const appRouter = router({
     }))
     return {
       ...mapPool,
-      maps: mapDetailsMerged,
+      maps: mapDetailsMerged.filter((map) => !!map.mapDetails),
     }
   }),
   mapPoolNames: procedure.query(async (opts) => {
@@ -186,6 +186,13 @@ export const appRouter = router({
   player: playerRouter,
   colorThief: procedure.input(z.string()).query(async (opts) => {
     return await getPaletteFromURL(opts.input)
+  }),
+  getIsReplay: procedure.query(async (opts) => {
+    return (await opts.ctx.state.get("isReplay")) ?? false
+  }),
+  setIsReplay: procedure.input(z.boolean()).mutation(async (opts) => {
+    await opts.ctx.state.set("isReplay", opts.input)
+    return opts.input
   }),
 })
 
