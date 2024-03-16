@@ -36,11 +36,17 @@ const MapPoolBannerSelect = () => {
         <SelectContent>
           <SelectItem value="Winners_Round1">Winners_Round1</SelectItem>
           <SelectItem value="Winners_Round2">Winners_Round2</SelectItem>
+          <SelectItem value="Winners_Round3">Winners_Round3</SelectItem>
           <SelectItem value="Winners_SemiFinals">Winners_SemiFinals</SelectItem>
+          <SelectItem value="Winners_BracketRESET">
+            Winners_BracketRESET
+          </SelectItem>
           <SelectItem value="Losers_Round1">Losers_Round1</SelectItem>
           <SelectItem value="Losers_Round2">Losers_Round2</SelectItem>
+          <SelectItem value="Losers_Round3">Losers_Round3</SelectItem>
+          <SelectItem value="Losers_Round4">Losers_Round4</SelectItem>
           <SelectItem value="Losers_SemiFinals">Losers_SemiFinals</SelectItem>
-          <SelectItem value="Losers_Finals">Losers_Finals</SelectItem>
+          <SelectItem value="Losers_FINALS">Losers_FINALS</SelectItem>
           <SelectItem value="Grand_Finals">Grand_Finals</SelectItem>
         </SelectContent>
       </Select>

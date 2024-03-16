@@ -8,7 +8,6 @@ import { trpc } from "@bocchi/bs-canada-overlay/utils/TRPCProvider"
 import { background } from "../../_components/MapCard"
 import useColorThief from "../../_hooks/useColorThief"
 import cn from "@bocchi/bs-canada-overlay/utils/cn"
-import Difficulty from "@bocchi/bs-canada-overlay/data/Difficulty"
 
 const CurrentMap = () => {
   const { data: currentMatchId } = useCurrentMatchIdQuery()
