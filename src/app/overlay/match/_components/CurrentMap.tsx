@@ -34,6 +34,9 @@ const CurrentMap = () => {
       enabled: !!currentMapQuery.matchById?.currentMap?.hash,
     },
   )
+  const { data: isReplay } = trpc.getIsReplay.useQuery(undefined, {
+    refetchInterval: 500,
+  })
   const backgroundString = useColorThief(mapDetails?.versions?.[0].coverURL)
   const difficulty = currentMapQuery.matchById?.currentMap?.difficulty
 
@@ -41,45 +44,53 @@ const CurrentMap = () => {
 
   return (
     <div
-      className={background({
-        className: "h-[140px] w-auto  transition-all",
-      })}
-      style={{
-        background: backgroundString,
-      }}
+      className={cn(
+        "flex w-full flex-row items-center gap-5",
+        isReplay ? "justify-end" : "justify-center",
+      )}
     >
       <div
-        className="absolute bottom-0 left-0 right-0 top-0"
-        style={{ background: backgroundString }}
-      />
-      <div className="bg-white/10 backdrop-blur-sm backdrop-brightness-75">
-        <div className="flex flex-row items-center justify-between gap-5 p-5">
-          <div className="flex flex-row items-center gap-5">
-            <img
-              className="aspect-square h-24 rounded-md"
-              src={mapDetails?.versions?.[0].coverURL}
-            />
-            <div className="flex min-w-[420px] max-w-[1200px] flex-col overflow-hidden">
-              <span className="line-clamp-1 overflow-ellipsis text-2xl ">
-                {mapDetails?.metadata.songName} -{" "}
-                {mapDetails?.metadata.songAuthorName}
+        className={background({
+          className: "h-[140px] w-auto transition-all",
+        })}
+        style={{
+          background: backgroundString,
+        }}
+      >
+        <div
+          className="absolute bottom-0 left-0 right-0 top-0"
+          style={{ background: backgroundString }}
+        />
+        <div className="bg-white/10 backdrop-blur-sm backdrop-brightness-75">
+          <div className="flex flex-row items-center justify-between gap-5 p-5">
+            <div className="flex flex-row items-center gap-5">
+              <img
+                className="aspect-square h-24 rounded-md"
+                src={mapDetails?.versions?.[0].coverURL}
+              />
+              <div className="flex min-w-[420px] max-w-[800px] flex-col overflow-hidden">
+                <span className="line-clamp-1 overflow-ellipsis text-2xl ">
+                  {mapDetails?.metadata.songName} -{" "}
+                  {mapDetails?.metadata.songAuthorName}
+                </span>
+                <span className="line-clamp-1 overflow-ellipsis text-sm ">
+                  Mapped by {mapDetails?.metadata.levelAuthorName}
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
+              <span className={cn("text-md font-semibold")}>
+                {mapDetails?.id}
               </span>
-              <span className="line-clamp-1 overflow-ellipsis text-sm ">
-                Mapped by {mapDetails?.metadata.levelAuthorName}
+              <span className={cn("text-sm")}>
+                {mapDetails?.metadata.bpm} BPM
               </span>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            {!!difficulty && <DifficultyBadge difficulty={difficulty} />}
-            <span className={cn("text-md font-semibold")}>
-              {mapDetails?.id}
-            </span>
-            <span className={cn("text-sm")}>
-              {mapDetails?.metadata.bpm} BPM
-            </span>
-          </div>
         </div>
       </div>
+      {isReplay && <img src="/replay.png" className="h-20 self-end" />}
     </div>
   )
 }
