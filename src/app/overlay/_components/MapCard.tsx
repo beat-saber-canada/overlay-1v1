@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const background = cva(
-  "transition ease-in-out delay-150 flex w-[700px] flex-row items-center justify-between rounded-md p-5 outline outline-offset-4 outline-4",
+  "transition relative overflow-hidden ease-in-out delay-150 w-[700px] rounded-md outline outline-offset-4 outline-4",
   {
     variants: {
       state: {
@@ -21,10 +21,6 @@ export const background = cva(
         picked: "outline-picked-green",
         banned: "outline-maple-red-dark",
         tiebreaker: "outline-tiebreaker-yellow",
-      },
-      isDark: {
-        true: "text-white",
-        false: "text-black",
       },
     },
     defaultVariants: {
@@ -44,48 +40,45 @@ const MapCard = (props: Props) => {
       refetchInterval: 1000,
     },
   )
-  const { isFirstDark, isSecondDark, backgroundString } = useColorThief(
-    map.mapDetails?.versions?.[0].coverURL,
-  )
+  const backgroundString = useColorThief(map.mapDetails?.versions?.[0].coverURL)
 
   return (
     <div
       className={background({
         state: mapPoolState ?? undefined,
-        isDark: isFirstDark,
       })}
-      style={{ background: backgroundString }}
     >
-      <div className="flex flex-row items-center gap-5">
-        <img
-          className="aspect-square h-24 rounded-md"
-          src={map.mapDetails?.versions?.[0].coverURL}
-        />
-        <div className="flex w-[420px] flex-col overflow-hidden">
-          <span className="line-clamp-1 overflow-ellipsis text-2xl">
-            {map.mapDetails.metadata.songName} -{" "}
-            {map.mapDetails.metadata.songAuthorName}
-          </span>
-          <span className="line-clamp-1 overflow-ellipsis text-sm ">
-            Mapped by {map.mapDetails.metadata.levelAuthorName}
-          </span>
+      <div
+        className="absolute bottom-0 left-0 right-0 top-0"
+        style={{ background: backgroundString }}
+      />
+      <div className="bg-white/10 backdrop-blur-sm backdrop-brightness-75">
+        <div className="flex flex-row items-center justify-between p-5">
+          <div className="flex flex-row items-center gap-5">
+            <img
+              className="aspect-square h-24 rounded-md"
+              src={map.mapDetails?.versions?.[0].coverURL}
+            />
+            <div className="flex w-[420px] flex-col overflow-hidden">
+              <span className="line-clamp-1 overflow-ellipsis text-2xl">
+                {map.mapDetails.metadata.songName} -{" "}
+                {map.mapDetails.metadata.songAuthorName}
+              </span>
+              <span className="line-clamp-1 overflow-ellipsis text-sm ">
+                Mapped by {map.mapDetails.metadata.levelAuthorName}
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <DifficultyBadge difficulty={map.difficulty} />
+            <span className={cn("text-md font-semibold")}>
+              {map.mapDetails.id}
+            </span>
+            <span className={cn("text-sm")}>
+              {map.mapDetails.metadata.bpm} BPM
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col items-end gap-1">
-        <DifficultyBadge difficulty={map.difficulty} />
-        <span
-          className={cn(
-            "text-md font-semibold",
-            isSecondDark ? "text-white" : "text-black",
-          )}
-        >
-          {map.mapDetails.id}
-        </span>
-        <span
-          className={cn("text-sm", isSecondDark ? "text-white" : "text-black")}
-        >
-          {map.mapDetails.metadata.bpm} BPM
-        </span>
       </div>
     </div>
   )
