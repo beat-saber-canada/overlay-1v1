@@ -54,7 +54,7 @@ const useCalculateScore = (
     (score) => score.ownerGuid === playerGuid,
   )?.[0]
   const combo = score?.combo ?? 0
-  const accuracy = (score?.score ?? 0) / (score?.maxScore ?? 1)
+  const accuracy = (score?.score ?? 0) / (score?.maxScore ?? 1) * 100
 
   return {
     combo,

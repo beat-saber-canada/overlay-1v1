@@ -64,7 +64,7 @@ const StreamDialog = (props: Props) => {
   }
 
   const onSubmit = async (settings: z.infer<typeof streamSchema>) => {
-    await mutateAsync({ playerId: player.scoreSaberId!, settings })
+    await mutateAsync({ playerId: playerId!, settings })
     setIsOpen(false)
   }
 
