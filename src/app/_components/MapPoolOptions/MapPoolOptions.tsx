@@ -8,6 +8,7 @@ import {
 import MapPoolSelect from "@bocchi/bs-canada-overlay/app/_components/MapPoolOptions/MapPoolSelect"
 import MapPoolDropdowns from "@bocchi/bs-canada-overlay/app/_components/MapPoolOptions/MapPoolDropdowns"
 import MapPoolBannerSelect from "@bocchi/bs-canada-overlay/app/_components/MapPoolOptions/MapPoolBannerSelect"
+import MapPoolIsReplay from "./MapPoolIsReplay"
 
 const MapPoolOptions = () => {
   return (
@@ -18,6 +19,7 @@ const MapPoolOptions = () => {
       <CardContent className="flex flex-col gap-5">
         <MapPoolSelect />
         <MapPoolBannerSelect />
+        <MapPoolIsReplay />
         <MapPoolDropdowns />
       </CardContent>
       <CardFooter></CardFooter>
